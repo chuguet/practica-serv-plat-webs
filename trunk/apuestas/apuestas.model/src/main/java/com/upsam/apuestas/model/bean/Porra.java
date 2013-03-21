@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -52,14 +50,9 @@ public class Porra implements IModelTable {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<PorraRellenada> porraRellenada;
 
-	/** The usuario. */
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_USUARIO")
-	private Usuario usuario;
-
 	/**
 	 * Gets the fecha limite.
-	 *
+	 * 
 	 * @return the fecha limite
 	 */
 	public Date getFechaLimite() {
@@ -68,8 +61,9 @@ public class Porra implements IModelTable {
 
 	/**
 	 * Sets the fecha limite.
-	 *
-	 * @param fechaLimite the new fecha limite
+	 * 
+	 * @param fechaLimite
+	 *            the new fecha limite
 	 */
 	public void setFechaLimite(Date fechaLimite) {
 		this.fechaLimite = fechaLimite;
@@ -77,7 +71,7 @@ public class Porra implements IModelTable {
 
 	/**
 	 * Gets the competicion.
-	 *
+	 * 
 	 * @return the competicion
 	 */
 	public String getCompeticion() {
@@ -86,8 +80,9 @@ public class Porra implements IModelTable {
 
 	/**
 	 * Sets the competicion.
-	 *
-	 * @param competicion the new competicion
+	 * 
+	 * @param competicion
+	 *            the new competicion
 	 */
 	public void setCompeticion(String competicion) {
 		this.competicion = competicion;
@@ -95,7 +90,7 @@ public class Porra implements IModelTable {
 
 	/**
 	 * Gets the id.
-	 *
+	 * 
 	 * @return the id
 	 */
 	public Integer getId() {
@@ -104,8 +99,9 @@ public class Porra implements IModelTable {
 
 	/**
 	 * Sets the id.
-	 *
-	 * @param id the new id
+	 * 
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Integer id) {
 		this.id = id;
@@ -113,7 +109,7 @@ public class Porra implements IModelTable {
 
 	/**
 	 * Gets the partidos.
-	 *
+	 * 
 	 * @return the partidos
 	 */
 	public List<Partido> getPartidos() {
@@ -122,8 +118,9 @@ public class Porra implements IModelTable {
 
 	/**
 	 * Sets the partidos.
-	 *
-	 * @param partidos the new partidos
+	 * 
+	 * @param partidos
+	 *            the new partidos
 	 */
 	public void setPartidos(List<Partido> partidos) {
 		this.partidos = partidos;
@@ -131,7 +128,7 @@ public class Porra implements IModelTable {
 
 	/**
 	 * Gets the porra rellenada.
-	 *
+	 * 
 	 * @return the porra rellenada
 	 */
 	public List<PorraRellenada> getPorraRellenada() {
@@ -140,29 +137,12 @@ public class Porra implements IModelTable {
 
 	/**
 	 * Sets the porra rellenada.
-	 *
-	 * @param porraRellenada the new porra rellenada
+	 * 
+	 * @param porraRellenada
+	 *            the new porra rellenada
 	 */
 	public void setPorraRellenada(List<PorraRellenada> porraRellenada) {
 		this.porraRellenada = porraRellenada;
-	}
-
-	/**
-	 * Gets the usuario.
-	 *
-	 * @return the usuario
-	 */
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	/**
-	 * Sets the usuario.
-	 *
-	 * @param usuario the new usuario
-	 */
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 }

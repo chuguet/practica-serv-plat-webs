@@ -59,11 +59,6 @@ public class Usuario implements IModelTable {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<PorraRellenada> porraRellenada;
 
-	/** The porra. */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Porra> porra;
-
 	/**
 	 * Gets the rol.
 	 * 
@@ -195,25 +190,6 @@ public class Usuario implements IModelTable {
 	 */
 	public void setPorraRellenada(List<PorraRellenada> porraRellenada) {
 		this.porraRellenada = porraRellenada;
-	}
-
-	/**
-	 * Gets the porra.
-	 * 
-	 * @return the porra
-	 */
-	public List<Porra> getPorra() {
-		return porra;
-	}
-
-	/**
-	 * Sets the porra.
-	 * 
-	 * @param porra
-	 *            the new porra
-	 */
-	public void setPorra(List<Porra> porra) {
-		this.porra = porra;
 	}
 
 }

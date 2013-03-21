@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.upsam.apuestas.controller.dto.MensajeDTO;
 import com.upsam.apuestas.controller.dto.UsuarioDTO;
+import com.upsam.apuestas.controller.dto.util.IUsuarioUtilDTO;
 import com.upsam.apuestas.model.bean.Usuario;
 import com.upsam.apuestas.model.exception.AppException;
 import com.upsam.apuestas.model.service.IUsuarioService;
@@ -26,6 +27,9 @@ public class UsuarioController {
 	/** The usuario service. */
 	@Inject
 	private IUsuarioService usuarioService;
+
+	@Inject
+	private IUsuarioUtilDTO usuarioUtilDTO;
 
 	/**
 	 * Retrieve one User.
@@ -40,7 +44,7 @@ public class UsuarioController {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
 		try {
 			Usuario usuario = this.usuarioService.findOne(id);
-			usuarioDTO.toRest(usuario);
+			usuarioDTO = usuarioUtilDTO.toRest(usuario);
 		} catch (AppException e) {
 
 		}
@@ -61,8 +65,7 @@ public class UsuarioController {
 			List<Usuario> usuarios = this.usuarioService.findAll();
 
 			for (Usuario usuario : usuarios) {
-				UsuarioDTO e = new UsuarioDTO();
-				e.toRest(usuario);
+				UsuarioDTO e = usuarioUtilDTO.toRest(usuario);
 				usuariosDTO.add(e);
 			}
 		} catch (AppException e) {
@@ -85,8 +88,7 @@ public class UsuarioController {
 			return new MensajeDTO("Un usuario es requerido", false);
 		}
 		try {
-			Usuario usuario = new Usuario();
-			usuarioDTO.toBusiness(usuario);
+			Usuario usuario = usuarioUtilDTO.toBusiness(usuarioDTO);
 			usuarioService.save(usuario);
 			return new MensajeDTO("Usuario creado correctamente", true);
 		} catch (AppException e) {
@@ -129,8 +131,7 @@ public class UsuarioController {
 			return new MensajeDTO("Un usuario es requerido", false);
 		}
 		try {
-			Usuario usuario = new Usuario();
-			usuarioDTO.toBusiness(usuario);
+			Usuario usuario = usuarioUtilDTO.toBusiness(usuarioDTO);
 			usuarioService.update(usuario);
 			return new MensajeDTO("Usuario modificado correctamente", true);
 		} catch (AppException e) {

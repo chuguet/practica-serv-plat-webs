@@ -1,9 +1,5 @@
 package com.upsam.apuestas.controller.dto;
 
-import com.upsam.apuestas.model.bean.Rol;
-import com.upsam.apuestas.model.bean.Usuario;
-import com.upsam.apuestas.model.exception.AppException;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class UsuarioDTO.
@@ -73,10 +69,10 @@ public class UsuarioDTO extends AbstractDTO {
 	/**
 	 * Sets the admin.
 	 * 
-	 * @param admin
-	 *            the new admin
+	 * @param pRol
+	 *            the new rol
 	 */
-	public void setAdmin(String pRol) {
+	public void setRol(String pRol) {
 		this.rol = pRol;
 	}
 
@@ -118,46 +114,6 @@ public class UsuarioDTO extends AbstractDTO {
 	 */
 	public void setUser(String user) {
 		this.user = user;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.gestaller.contabilidad.controller.dto.AbstractDTO#toBusiness(java
-	 * .lang.Object)
-	 */
-	@Override
-	public void toBusiness(Object object) throws AppException {
-		Usuario usuario = (Usuario) object;
-		usuario.setId(this.getId());
-		usuario.setNombre(this.nombre);
-		usuario.setApellidos(this.apellidos);
-		if (this.rol.equals("Administrador")) {
-			usuario.setRol(Rol.ROLE_ADMIN);
-		} else if (this.rol.equals("Usuario")) {
-			usuario.setRol(Rol.ROLE_USER);
-		}
-		usuario.setUser(this.user);
-		usuario.setPassword(this.password);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.gestaller.contabilidad.controller.dto.AbstractDTO#toRest(java.lang
-	 * .Object)
-	 */
-	@Override
-	public void toRest(Object object) throws AppException {
-		Usuario usuario = (Usuario) object;
-		this.setId(usuario.getId());
-		this.nombre = usuario.getNombre();
-		this.apellidos = usuario.getApellidos();
-		this.rol = usuario.getRol().getNameId();
-		this.user = usuario.getUser();
-		this.password = usuario.getPassword();
 	}
 
 }

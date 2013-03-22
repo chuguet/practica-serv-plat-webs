@@ -31,7 +31,7 @@ public class Porra implements IModelTable {
 
 	/** The competicion. */
 	@Basic
-	@Column(name = "COMPETICION")
+	@Column(name = "COMPETICION", unique = true)
 	private String competicion;
 
 	/** The id. */

@@ -13,7 +13,6 @@
 		<link href="resources/css/generic.css" rel="stylesheet" type="text/css" />
 		<link href="resources/css/jquery.alerts.css" rel="stylesheet" type="text/css">
 		<link href="resources/css/ui.jqgrid.css" rel="stylesheet" type="text/css">
-<!-- 		<link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
 
 		<script src="resources/js/jquery.require.js" type="text/javascript"></script>
 		<script src="resources/js/jquery-1.8.2.min.js" type="text/javascript"></script>
@@ -25,6 +24,7 @@
 		<script src="resources/js/i18n/grid.locale-es.js" type="text/javascript"></script>
 		
 		<script src="resources/js/views/usuario.js" type="text/javascript"></script>
+		<script src="resources/js/views/porra.js" type="text/javascript"></script>
 		
 	</head>
 	<body id="apuestas" class="web" >
@@ -40,6 +40,7 @@
 		</sec:authorize>
 		<sec:authorize ifAnyGranted="ROLE_ADMIN">
 			<a href="javascript:void" onclick="javascript:generic.getList('usuario');" title="Ver usuarios" class="itemMenu">Usuarios</a>
+			<a href="javascript:void" onclick="javascript:generic.getList('porra');" title="Ver porras" class="itemMenu">Porras</a>
 		</sec:authorize>
 			<div id="usuario">
 				<span><b>Usuario :</b> ${nombre} ${apellidos}</span> 

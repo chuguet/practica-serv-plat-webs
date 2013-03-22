@@ -1,5 +1,7 @@
 package com.upsam.apuestas.controller.dto;
 
+import java.util.List;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class UsuarioDTO.
@@ -20,6 +22,9 @@ public class UsuarioDTO extends AbstractDTO {
 
 	/** The user. */
 	private String user;
+
+	/** The porra rellenada dto. */
+	private List<PorraRellenadaDTO> porraRellenadaDTO;
 
 	/**
 	 * Gets the admin.
@@ -114,6 +119,25 @@ public class UsuarioDTO extends AbstractDTO {
 	 */
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	/**
+	 * Gets the porra rellenada dto.
+	 * 
+	 * @return the porra rellenada dto
+	 */
+	public List<PorraRellenadaDTO> getPorraRellenadaDTO() {
+		return porraRellenadaDTO;
+	}
+
+	/**
+	 * Sets the porra rellenada dto.
+	 * 
+	 * @param porraRellenadaDTO
+	 *            the new porra rellenada dto
+	 */
+	public void setPorraRellenadaDTO(List<PorraRellenadaDTO> porraRellenadaDTO) {
+		this.porraRellenadaDTO = porraRellenadaDTO;
 	}
 
 }

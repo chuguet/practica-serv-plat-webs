@@ -6,26 +6,29 @@ import com.upsam.apuestas.model.exception.AppException;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface IDataTransferObjectUtil.
+ * The Interface IUsuarioUtilDTO.
  */
-
 public interface IUsuarioUtilDTO {
 
 	/**
 	 * To business.
-	 *
-	 * @param usuarioDTO the usuario dto
+	 * 
+	 * @param usuarioDTO
+	 *            the usuario dto
 	 * @return the usuario
-	 * @throws AppException the app exception
+	 * @throws AppException
+	 *             the app exception
 	 */
 	Usuario toBusiness(UsuarioDTO usuarioDTO) throws AppException;
 
 	/**
 	 * To rest.
-	 *
-	 * @param usuario the usuario
+	 * 
+	 * @param usuario
+	 *            the usuario
 	 * @return the usuario dto
-	 * @throws AppException the app exception
+	 * @throws AppException
+	 *             the app exception
 	 */
 	UsuarioDTO toRest(Usuario usuario) throws AppException;
 

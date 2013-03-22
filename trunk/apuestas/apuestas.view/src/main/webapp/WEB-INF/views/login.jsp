@@ -22,7 +22,7 @@
 <body  onload='document.f.j_username.focus();'  class="web">
 	<form name='f' id='f' action="<c:url value='j_spring_security_check' />" method='POST'>
 		<fieldset class="login">
-			<legend>Acceso a Porras de f&uacute;tbol</legend>
+			<legend>Acceso de usuarios</legend>
 			<span>Usuario:</span> 
 			<input type='text' name='j_username' value='' class="text ui-widget-content ui-corner-all" />
 			<span>Contrase&ntilde;a:</span>

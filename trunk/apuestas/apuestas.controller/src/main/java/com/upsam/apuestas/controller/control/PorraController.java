@@ -13,23 +13,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.upsam.apuestas.controller.dto.BusquedaDTO;
 import com.upsam.apuestas.controller.dto.MensajeDTO;
 import com.upsam.apuestas.controller.dto.PorraDTO;
 import com.upsam.apuestas.controller.dto.util.IPorraUtilDTO;
+import com.upsam.apuestas.model.bean.Partido;
 import com.upsam.apuestas.model.bean.Porra;
 import com.upsam.apuestas.model.exception.AppException;
 import com.upsam.apuestas.model.service.IPorraService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PorraController.
+ */
 @Controller
 @RequestMapping("/porra")
 public class PorraController {
 
+	/** The porra service. */
 	@Inject
 	private IPorraService porraService;
 
+	/** The porra util dto. */
 	@Inject
 	private IPorraUtilDTO porraUtilDTO;
 
+	/**
+	 * Retrieve.
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the porra dto
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	PorraDTO retrieve(@PathVariable("id") Integer id) {
@@ -43,6 +58,11 @@ public class PorraController {
 		return porraDTO;
 	}
 
+	/**
+	 * List all.
+	 * 
+	 * @return the list
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody
 	List<PorraDTO> listAll() {
@@ -62,85 +82,109 @@ public class PorraController {
 		return porrasDTO;
 	}
 
-	// @RequestMapping(value = "/busqueda", method = RequestMethod.POST)
-	// public @ResponseBody
-	// List<PorraDTO> listAllFilter(@RequestBody BusquedaDTO busquedaDTO) {
-	// List<PorraDTO> result = new ArrayList<PorraDTO>();
-	//
-	// try {
-	// List<Cliente> clientes = clienteService.findAll();
-	// if (isEmpty(busquedaDTO)) {
-	// for (Cliente cliente : clientes) {
-	// ClienteDTO e = new ClienteDTO();
-	// e.toRest(cliente);
-	// result.add(e);
-	// }
-	// } else {
-	// List<Cliente> clientesFiltrados = filtrarClientes(clientes,
-	// busquedaDTO);
-	//
-	// for (Cliente cliente : clientesFiltrados) {
-	// ClienteDTO e = new ClienteDTO();
-	// e.toRest(cliente);
-	// result.add(e);
-	// }
-	// }
-	// } catch (AppException e) {
-	//
-	// }
-	// return result;
-	// }
-	//
-	// private boolean isEmpty(BusquedaDTO busquedaDTO) {
-	// return busquedaDTO.getApellidos().isEmpty()
-	// && busquedaDTO.getMatricula().isEmpty()
-	// && busquedaDTO.getNombre().isEmpty();
-	// }
-	//
-	// private List<Cliente> filtrarClientes(List<Cliente> clientes,
-	// BusquedaDTO busqueda) {
-	// List<Cliente> result = new ArrayList<Cliente>();
-	// for (Cliente cliente : clientes) {
-	// if (busqueda.getApellidos() != null
-	// && !busqueda.getApellidos().isEmpty()) {
-	// if (cliente.getApellidos().toUpperCase()
-	// .contains(busqueda.getApellidos().toUpperCase())
-	// && !result.contains(cliente)) {
-	// result.add(cliente);
-	// }
-	// }
-	// if (busqueda.getMatricula() != null
-	// && !busqueda.getMatricula().isEmpty()) {
-	// if (existeCoche(cliente.getCoches(), busqueda.getMatricula())
-	// && !result.contains(cliente)) {
-	// result.add(cliente);
-	// }
-	// }
-	// if (busqueda.getNombre() != null && !busqueda.getNombre().isEmpty()) {
-	// if (cliente.getNombre().toUpperCase()
-	// .contains(busqueda.getNombre().toUpperCase())
-	// && !result.contains(cliente)) {
-	// result.add(cliente);
-	// }
-	// }
-	// }
-	// return result;
-	// }
-	//
-	// private boolean existeCoche(Set<Coche> coches, String matricula) {
-	// boolean result = false;
-	// if (coches != null && !coches.isEmpty()) {
-	// for (Coche coche : coches) {
-	// if (coche.getMatricula().toUpperCase()
-	// .contains(matricula.toUpperCase())) {
-	// result = true;
-	// break;
-	// }
-	// }
-	// }
-	// return result;
-	// }
+	/**
+	 * List all filter.
+	 * 
+	 * @param busquedaDTO
+	 *            the busqueda dto
+	 * @return the list
+	 */
+	@RequestMapping(value = "/busqueda", method = RequestMethod.POST)
+	public @ResponseBody
+	List<PorraDTO> listAllFilter(@RequestBody BusquedaDTO busquedaDTO) {
+		List<PorraDTO> result = new ArrayList<PorraDTO>();
 
+		try {
+			List<Porra> porras = porraService.findAll();
+			if (isEmpty(busquedaDTO)) {
+				for (Porra porra : porras) {
+					PorraDTO porraDTO = new PorraDTO();
+					porraDTO = this.porraUtilDTO.toRest(porra);
+					result.add(porraDTO);
+				}
+			} else {
+				List<Porra> porrasFiltradas = filtrarPorras(porras, busquedaDTO);
+				for (Porra porra : porrasFiltradas) {
+					PorraDTO porraDTO = new PorraDTO();
+					porraDTO = this.porraUtilDTO.toRest(porra);
+					result.add(porraDTO);
+				}
+			}
+		} catch (AppException e) {
+
+		}
+		return result;
+	}
+
+	/**
+	 * Checks if is empty.
+	 * 
+	 * @param busquedaDTO
+	 *            the busqueda dto
+	 * @return true, if is empty
+	 */
+	private boolean isEmpty(BusquedaDTO busquedaDTO) {
+		return busquedaDTO.getCompeticion().isEmpty()
+				&& busquedaDTO.getEquipo().isEmpty();
+	}
+
+	/**
+	 * Filtrar porras.
+	 * 
+	 * @param porras
+	 *            the porras
+	 * @param busqueda
+	 *            the busqueda
+	 * @return the list
+	 */
+	private List<Porra> filtrarPorras(List<Porra> porras, BusquedaDTO busqueda) {
+		List<Porra> result = new ArrayList<Porra>();
+		for (Porra porra : porras) {
+			if (busqueda.getCompeticion() != null
+					&& !busqueda.getCompeticion().isEmpty()) {
+				if (porra.getCompeticion().toUpperCase()
+						.contains(busqueda.getCompeticion().toUpperCase())
+						&& !result.contains(porra)) {
+					result.add(porra);
+				}
+			}
+			if (busqueda.getEquipo() != null && !busqueda.getEquipo().isEmpty()) {
+				if (existeEquipo(porra.getPartidos(), busqueda.getEquipo())
+						&& !result.contains(porra)) {
+					result.add(porra);
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Existe equipo.
+	 * 
+	 * @param partidos
+	 *            the partidos
+	 * @param equipo
+	 *            the equipo
+	 * @return true, if successful
+	 */
+	private boolean existeEquipo(List<Partido> partidos, String equipo) {
+		for (Partido partido : partidos) {
+			if (partido.getLocal().toUpperCase().contains(equipo.toUpperCase())
+					|| partido.getVisitante().toUpperCase()
+							.contains(equipo.toUpperCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Insert.
+	 * 
+	 * @param porraDTO
+	 *            the porra dto
+	 * @return the mensaje dto
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody
 	MensajeDTO insert(@RequestBody PorraDTO porraDTO) {
@@ -178,6 +222,13 @@ public class PorraController {
 		return new StringBuffer("porra/").append(operacion).toString();
 	}
 
+	/**
+	 * Update.
+	 * 
+	 * @param porraDTO
+	 *            the porra dto
+	 * @return the mensaje dto
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	public @ResponseBody
 	MensajeDTO update(@RequestBody PorraDTO porraDTO) {
@@ -196,6 +247,15 @@ public class PorraController {
 		}
 	}
 
+	/**
+	 * Removes the.
+	 * 
+	 * @param id
+	 *            the id
+	 * @param uiModel
+	 *            the ui model
+	 * @return the mensaje dto
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public @ResponseBody
 	MensajeDTO remove(@PathVariable Integer id, Model uiModel) {

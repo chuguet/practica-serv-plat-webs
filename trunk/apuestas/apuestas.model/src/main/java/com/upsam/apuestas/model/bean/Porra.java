@@ -24,15 +24,15 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "PORRA")
 public class Porra implements IModelTable {
 
-	/** The fecha limite. */
-	@Basic
-	@Column(name = "FECHA_LIMITE")
-	private Date fechaLimite;
-
 	/** The competicion. */
 	@Basic
 	@Column(name = "COMPETICION", unique = true)
 	private String competicion;
+
+	/** The fecha limite. */
+	@Basic
+	@Column(name = "FECHA_LIMITE")
+	private Date fechaLimite;
 
 	/** The id. */
 	@Id
@@ -50,6 +50,42 @@ public class Porra implements IModelTable {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<PorraRellenada> porraRellenada;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Porra other = (Porra) obj;
+		if (competicion == null) {
+			if (other.competicion != null)
+				return false;
+		} else if (!competicion.equals(other.competicion))
+			return false;
+		if (fechaLimite == null) {
+			if (other.fechaLimite != null)
+				return false;
+		} else if (!fechaLimite.equals(other.fechaLimite))
+			return false;
+		return true;
+	}
+
+	/**
+	 * Gets the competicion.
+	 * 
+	 * @return the competicion
+	 */
+	public String getCompeticion() {
+		return competicion;
+	}
+
 	/**
 	 * Gets the fecha limite.
 	 * 
@@ -60,22 +96,46 @@ public class Porra implements IModelTable {
 	}
 
 	/**
-	 * Sets the fecha limite.
+	 * Gets the id.
 	 * 
-	 * @param fechaLimite
-	 *            the new fecha limite
+	 * @return the id
 	 */
-	public void setFechaLimite(Date fechaLimite) {
-		this.fechaLimite = fechaLimite;
+	public Integer getId() {
+		return id;
 	}
 
 	/**
-	 * Gets the competicion.
+	 * Gets the partidos.
 	 * 
-	 * @return the competicion
+	 * @return the partidos
 	 */
-	public String getCompeticion() {
-		return competicion;
+	public List<Partido> getPartidos() {
+		return partidos;
+	}
+
+	/**
+	 * Gets the porra rellenada.
+	 * 
+	 * @return the porra rellenada
+	 */
+	public List<PorraRellenada> getPorraRellenada() {
+		return porraRellenada;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((competicion == null) ? 0 : competicion.hashCode());
+		result = prime * result
+				+ ((fechaLimite == null) ? 0 : fechaLimite.hashCode());
+		return result;
 	}
 
 	/**
@@ -89,12 +149,13 @@ public class Porra implements IModelTable {
 	}
 
 	/**
-	 * Gets the id.
+	 * Sets the fecha limite.
 	 * 
-	 * @return the id
+	 * @param fechaLimite
+	 *            the new fecha limite
 	 */
-	public Integer getId() {
-		return id;
+	public void setFechaLimite(Date fechaLimite) {
+		this.fechaLimite = fechaLimite;
 	}
 
 	/**
@@ -108,15 +169,6 @@ public class Porra implements IModelTable {
 	}
 
 	/**
-	 * Gets the partidos.
-	 * 
-	 * @return the partidos
-	 */
-	public List<Partido> getPartidos() {
-		return partidos;
-	}
-
-	/**
 	 * Sets the partidos.
 	 * 
 	 * @param partidos
@@ -124,15 +176,6 @@ public class Porra implements IModelTable {
 	 */
 	public void setPartidos(List<Partido> partidos) {
 		this.partidos = partidos;
-	}
-
-	/**
-	 * Gets the porra rellenada.
-	 * 
-	 * @return the porra rellenada
-	 */
-	public List<PorraRellenada> getPorraRellenada() {
-		return porraRellenada;
 	}
 
 	/**

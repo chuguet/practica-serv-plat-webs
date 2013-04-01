@@ -54,6 +54,11 @@ public class Usuario implements IModelTable {
 	@Column(name = "USER", unique = true)
 	private String user;
 
+	/** The email. */
+	@Basic
+	@Column(name = "EMAIL", unique = true)
+	private String email;
+
 	/** The porra rellenada. */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -190,6 +195,25 @@ public class Usuario implements IModelTable {
 	 */
 	public void setPorraRellenada(List<PorraRellenada> porraRellenada) {
 		this.porraRellenada = porraRellenada;
+	}
+
+	/**
+	 * Gets the email.
+	 * 
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * Sets the email.
+	 * 
+	 * @param email
+	 *            the new email
+	 */
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

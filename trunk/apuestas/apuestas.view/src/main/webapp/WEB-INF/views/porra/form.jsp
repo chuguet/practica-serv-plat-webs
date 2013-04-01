@@ -10,6 +10,12 @@
 			$('input[id=id]').val(porra.id);
 			$('input[id=fecha_limite]').val(porra.fechaLimite);
 			$('input[id=competicion]').val(porra.competicion);
+			$("#lista").setGridParam({
+				data : porra.partidosDTO
+			}).trigger("reloadGrid");
+			$(window).bind('resize', function() {
+				$('#lista').setGridWidth($('.ui-jqgrid').parent().innerWidth() - 30);
+			}).trigger('resize');
 		};
 	</c:if>
 </script>
@@ -18,7 +24,7 @@
 		<legend>
 		<c:choose>
 			<c:when test="${operacion == 'new'}">Alta de Porra</c:when>
-			<c:otherwise>Edici&oacute;n de Porra</c:otherwise>
+			<c:otherwise>Vista Porra</c:otherwise>
 		</c:choose>
 		</legend>
 		<input type="hidden" id="id" />
@@ -26,7 +32,7 @@
 			<label for="competicion">Competci&oacute;n:</label>
 			<input id="competicion" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
 			<label for="fecha_limite">Fecha l&iacute;mite:</label>
-			<input id="fecha_limite" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
+			<input id="fecha_limite" class="text ui-widget-content ui-corner-all" />
 		</p>
 		
 		<fieldset>
@@ -47,6 +53,7 @@
 			<input type="button" id="btnAddPartido" value="Añadir Partido" />
 			<input type="button" id="btnModifyPartido" value="Modificar Partido" />
 			<input type="button" id="btnDeletePartido" value="Borrar Partido" />
+			<input type="button" id="btnAsigResul" value="Asignar Resultado" />
 			<input type="button" id="btnCancel" value="Cancelar" />
 		</div>
 	</fieldset>
@@ -61,6 +68,16 @@
 			<input id="local" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
 			<label for="visitante">Visitante:</label>
 			<input id="visitante" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
+		</div>
+	</form>
+</div>
+
+<div id="dialog-form-resultado" title="Resultado">
+	<form id="frmResultado">
+		<div id="tabs-resultado">
+			<a>1: </a><input type="radio" name="resul" value="1">Victoria Local<br>
+			<a>X: </a><input type="radio" name="resul" value="X">Empate<br>
+			<a>2: </a><input type="radio" name="resul" value="2">Victoria Visitante
 		</div>
 	</form>
 </div>

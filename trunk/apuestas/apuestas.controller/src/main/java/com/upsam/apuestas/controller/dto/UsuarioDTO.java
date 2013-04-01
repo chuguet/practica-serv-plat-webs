@@ -8,11 +8,11 @@ import java.util.List;
  */
 public class UsuarioDTO extends AbstractDTO {
 
-	/** The admin. */
-	private String rol;
-
 	/** The apellidos. */
 	private String apellidos;
+
+	/** The email. */
+	private String email;
 
 	/** The nombre. */
 	private String nombre;
@@ -20,20 +20,14 @@ public class UsuarioDTO extends AbstractDTO {
 	/** The password. */
 	private String password;
 
-	/** The user. */
-	private String user;
-
 	/** The porra rellenada dto. */
 	private List<PorraRellenadaDTO> porraRellenadaDTO;
 
-	/**
-	 * Gets the admin.
-	 * 
-	 * @return the admin
-	 */
-	public String getRol() {
-		return rol;
-	}
+	/** The admin. */
+	private String rol;
+
+	/** The user. */
+	private String user;
 
 	/**
 	 * Gets the apellidos.
@@ -42,6 +36,15 @@ public class UsuarioDTO extends AbstractDTO {
 	 */
 	public String getApellidos() {
 		return apellidos;
+	}
+
+	/**
+	 * Gets the email.
+	 * 
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
 	}
 
 	/**
@@ -63,22 +66,30 @@ public class UsuarioDTO extends AbstractDTO {
 	}
 
 	/**
+	 * Gets the porra rellenada dto.
+	 * 
+	 * @return the porra rellenada dto
+	 */
+	public List<PorraRellenadaDTO> getPorraRellenadaDTO() {
+		return porraRellenadaDTO;
+	}
+
+	/**
+	 * Gets the admin.
+	 * 
+	 * @return the admin
+	 */
+	public String getRol() {
+		return rol;
+	}
+
+	/**
 	 * Gets the user.
 	 * 
 	 * @return the user
 	 */
 	public String getUser() {
 		return user;
-	}
-
-	/**
-	 * Sets the admin.
-	 * 
-	 * @param pRol
-	 *            the new rol
-	 */
-	public void setRol(String pRol) {
-		this.rol = pRol;
 	}
 
 	/**
@@ -89,6 +100,16 @@ public class UsuarioDTO extends AbstractDTO {
 	 */
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
+	}
+
+	/**
+	 * Sets the email.
+	 * 
+	 * @param email
+	 *            the new email
+	 */
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	/**
@@ -112,25 +133,6 @@ public class UsuarioDTO extends AbstractDTO {
 	}
 
 	/**
-	 * Sets the user.
-	 * 
-	 * @param user
-	 *            the new user
-	 */
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	/**
-	 * Gets the porra rellenada dto.
-	 * 
-	 * @return the porra rellenada dto
-	 */
-	public List<PorraRellenadaDTO> getPorraRellenadaDTO() {
-		return porraRellenadaDTO;
-	}
-
-	/**
 	 * Sets the porra rellenada dto.
 	 * 
 	 * @param porraRellenadaDTO
@@ -138,6 +140,26 @@ public class UsuarioDTO extends AbstractDTO {
 	 */
 	public void setPorraRellenadaDTO(List<PorraRellenadaDTO> porraRellenadaDTO) {
 		this.porraRellenadaDTO = porraRellenadaDTO;
+	}
+
+	/**
+	 * Sets the admin.
+	 * 
+	 * @param pRol
+	 *            the new rol
+	 */
+	public void setRol(String pRol) {
+		this.rol = pRol;
+	}
+
+	/**
+	 * Sets the user.
+	 * 
+	 * @param user
+	 *            the new user
+	 */
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 }

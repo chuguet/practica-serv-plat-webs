@@ -34,6 +34,7 @@ public class UsuarioUtilDTO implements IUsuarioUtilDTO {
 			usuario.setRol(Rol.ROLE_USER);
 		}
 		usuario.setUser(usuarioDTO.getUser());
+		usuario.setEmail(usuarioDTO.getEmail());
 		usuario.setPassword(usuarioDTO.getPassword());
 		return usuario;
 	}
@@ -54,6 +55,7 @@ public class UsuarioUtilDTO implements IUsuarioUtilDTO {
 		usuarioDTO.setRol(usuario.getRol().getNameId());
 		usuarioDTO.setUser(usuario.getUser());
 		usuarioDTO.setPassword(usuario.getPassword());
+		usuarioDTO.setEmail(usuario.getEmail());
 		return usuarioDTO;
 	}
 }

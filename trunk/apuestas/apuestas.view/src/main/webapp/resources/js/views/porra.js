@@ -111,7 +111,7 @@ var porra = {
 						width : 30,
 						sorttype : 'string',
 						sortable : true,
-						align : 'right'
+						align : 'center'
 					}
 			],
 			rowNum : 20,
@@ -127,6 +127,7 @@ var porra = {
 			onSelectRow : function(rowid, status) {
 				$("#btnModifyPartido").button("enable");
 				$("#btnDeletePartido").button("enable");
+				$("#btnAsigResul").button("enable");
 				porra.rowID = rowid;
 			}
 		});
@@ -134,6 +135,19 @@ var porra = {
 		$(window).bind('resize', function() {
 			$('#lista').setGridWidth($('.ui-jqgrid').parent().innerWidth() - 30);
 		}).trigger('resize');
+		
+		var datePickerParams = {
+				"dateFormat" : 'dd/mm/yy',
+				"dayNamesMin" : [
+						"D", "L", "M", "X", "J", "V", "S"
+				],
+				"firstDay" : 1,
+				"monthNames" : [
+						"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+				],
+				"timeFormat": "HH:mm:ss"
+			};
+			$("#fecha_limite").datetimepicker(datePickerParams);
 		
 		$("#btnCancel").button().click(function() {
 			generic.getList('porra');
@@ -174,12 +188,20 @@ var porra = {
 		});
 		$("#btnDeletePartido").button("disable");
 		
+		$("#btnAsigResul").button().click(function() {
+			$('#dialog-form-resultado').dialog('option', 'title', 'Asignar Resultado');
+			$("#dialog-form-resultado").dialog("open");
+			$('input:radio[name=resul]')[0].checked = true;
+		});
+		$("#btnAsigResul").button("disable");
+		
 		$("#tabs-partido").tabs();
+		$("#tabs-resultado").tabs();
 		
 		$("#dialog-form-partido").dialog({
 			autoOpen : false,
-			height : 200,
-			width : 600,
+			height : 190,
+			width : 900,
 			modal : true,
 			buttons : {
 				"Aceptar" : function() {
@@ -223,6 +245,31 @@ var porra = {
 			}
 		});
 		
+		$("#dialog-form-resultado").dialog({
+			autoOpen : false,
+			height : 200,
+			width : 300,
+			modal : true,
+			buttons : {
+				"Aceptar" : function() {
+					var resultado = {
+						resultado : $("input[name='resul']:checked").val(),
+					};
+					
+					if (resultado.resultado != null) {
+						$('#lista').jqGrid('setRowData', porra.rowID, resultado);
+					}
+
+					$(this).dialog("close");
+				},
+				"Cancelar" : function() {
+					$(this).dialog("close");
+				}
+			},
+			close : function() {
+			}
+		});
+		
 	},
 	'deseleccionarPartido' : function(){
 		this.rowID = null;
@@ -244,14 +291,15 @@ var porra = {
 			errores += '- Debe introducir la fecha l&imite para poder rellenar la porra<br/>';
 		}
 		else {
-			var data = {
+			var porra = {
 				id : id,
 				competicion : competicion,
 				fechaLimite : fechaLimite,
 				partidosDTO : partidos
 			};
+			
 			var entity = (id != null) ? 'porra/' + id : 'porra';
-			generic.post(entity, data, function() {
+			generic.post(entity, porra, function() {
 				generic.getList('porra');
 			});
 		};

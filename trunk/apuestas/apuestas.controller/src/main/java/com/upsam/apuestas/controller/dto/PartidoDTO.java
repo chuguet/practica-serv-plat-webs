@@ -19,7 +19,7 @@ public class PartidoDTO extends AbstractDTO {
 	private String visitante;
 
 	/** The porra. */
-	private PorraDTO porra;
+	private PorraDTO porraDTO;
 
 	/**
 	 * Gets the local.
@@ -103,7 +103,7 @@ public class PartidoDTO extends AbstractDTO {
 	 * @return the porra
 	 */
 	public PorraDTO getPorra() {
-		return porra;
+		return porraDTO;
 	}
 
 	/**
@@ -113,6 +113,6 @@ public class PartidoDTO extends AbstractDTO {
 	 *            the new porra
 	 */
 	public void setPorra(PorraDTO porra) {
-		this.porra = porra;
+		this.porraDTO = porra;
 	}
 }

@@ -18,7 +18,7 @@
 	</fieldset>
 	<div class="botonera">
 		<input type="button" id="btnAlta" value="Alta" /> 
-		<input type="button" id="btnEditar" value="Editar" />
+		<input type="button" id="btnEditar" value="Ver/Editar" />
 		<input type="button" id="btnEliminar" value="Eliminar" />
 	</div>
 	<table id="lista"></table>

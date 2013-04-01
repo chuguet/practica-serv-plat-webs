@@ -10,6 +10,7 @@
 			$('input[id=id]').val(usuario.id);
 			$('input[id=nombre]').val(usuario.nombre);
 			$('input[id=apellidos]').val(usuario.apellidos);
+			$('input[id=email]').val(usuario.email);
 			$('input[id=usuario]').val(usuario.user);
 			if(usuario.rol=="Administrador"){
 				$('input:radio[name=rol]')[0].checked = true;
@@ -35,6 +36,10 @@
 		<p>
 			<label for="apellidos">Apellidos:</label>
 			<input id="apellidos" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
+		</p>
+		<p>
+			<label for="email">Email:</label>
+			<input id="email" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
 		</p>
 		<p>
 			<label for="usuario">Usuario:</label>

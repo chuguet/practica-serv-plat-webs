@@ -288,7 +288,10 @@ var porra = {
 			errores += '- Debe introducir el nombre de la competici&oacute;n<br/>';
 		}
 		if (fechaLimite == '') {
-			errores += '- Debe introducir la fecha l&imite para poder rellenar la porra<br/>';
+			errores += '- Debe introducir la fecha l&iacute;mite para poder rellenar la porra<br/>';
+		}
+		if (errores != '') {
+			jAlert(errores, "Validaci&oacute;n");
 		}
 		else {
 			var porra = {

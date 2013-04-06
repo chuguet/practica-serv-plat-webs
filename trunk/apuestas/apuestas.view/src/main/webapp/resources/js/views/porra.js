@@ -276,6 +276,7 @@ var porra = {
 		$('#lista').jqGrid('resetSelection');
 		$("#btnModifyPartido").button("disable");
 		$("#btnDeletePartido").button("disable");
+		$("#btnAsigResul").button("disable");
 	},
 	'getParams' : function() {
 		var id = ($("#id").val()) ? $("#id").val() : null;

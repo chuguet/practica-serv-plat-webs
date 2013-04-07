@@ -70,7 +70,9 @@ var porra = {
 		$("#btnEditar").button("disable");
 		
 		$("#btnPublicar").button().click(function() {
-			generic.get('porra/publicar', $('#lista').jqGrid('getRowData', porra.rowID).id);
+			generic.get('porra/publicar', $('#lista').jqGrid('getRowData', porra.rowID).id, function() {
+				generic.getList('porra');
+			});
 		});
 		$("#btnPublicar").button("disable");
 

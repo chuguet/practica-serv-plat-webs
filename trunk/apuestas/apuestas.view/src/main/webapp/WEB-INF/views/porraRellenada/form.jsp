@@ -12,9 +12,18 @@
 			$('input[id=fecha_relleno]').val(porraRellenada.fechaRelleno);
 			$('input[id=fecha_limite]').val(porraRellenada.fechaLimite);
 			$("#marcoPrincipal").text("Competicion " + porraRellenada.competicion);
-			$("#lista").setGridParam({
-				data : porraRellenada.partidosRellenadosDTO
-			}).trigger("reloadGrid");
+			
+			var lastId = 1;
+			for(var i = 0 ; i<porraRellenada.partidosRellenadosDTO.length ; i++){
+				if ($('#lista').getDataIDs().length > 0) {
+					lastId = parseInt($('#lista').getDataIDs().length) + 1;
+				}
+				if (porraRellenada.rowID == null) {
+					$('#lista').jqGrid("addRowData", lastId, porraRellenada.partidosRellenadosDTO[i], "last");
+				} else{
+					$('#lista').jqGrid('setRowData', porra.rowID, porraRellenada.partidosRellenadosDTO[i]);
+				}
+			}
 			$(window).bind('resize', function() {
 				$('#lista').setGridWidth($('.ui-jqgrid').parent().innerWidth() - 30);
 			}).trigger('resize');
@@ -38,7 +47,7 @@
 		<fieldset>
 			<legend>Partidos</legend>
 			<table id="lista"></table>
-			<div id=paginadorLista></div>
+			<div id="paginadorLista"></div>
 		</fieldset>
 		
 		<div class="botonera">

@@ -38,7 +38,7 @@
 		<fieldset>
 			<legend>Partidos</legend>
 			<table id="lista"></table>
-			<div id=paginadorLista></div>
+			<div id="paginadorLista"></div>
 		</fieldset>
 		
 		<div class="botonera">

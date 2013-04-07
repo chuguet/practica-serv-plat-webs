@@ -242,6 +242,8 @@ public class PorraController {
 		}
 		try {
 			Porra porra = porraUtilDTO.toBusiness(porraDTO);
+			porra.setPublicada(porraService.findOne(porra.getId())
+					.getPublicada());
 			porraService.update(porra);
 			return new MensajeDTO("Porra modificada correctamente", true);
 		} catch (AppException e) {
@@ -281,13 +283,10 @@ public class PorraController {
 			return new MensajeDTO("Una porra es requerida", false);
 		}
 		try {
-			Porra porra = this.porraService.findOne(id);
-			if (porra.getPublicada()) {
-				return new MensajeDTO("No se puede borrar una porra publicada", true);
-			} else {
-				this.porraService.delete(porra);
-				return new MensajeDTO("Porra eliminada correctamente", true);
-			}
+			Porra porra = new Porra();
+			porra.setId(id);
+			this.porraService.delete(porra);
+			return new MensajeDTO("Porra eliminada correctamente", true);
 		} catch (AppException e) {
 			return new MensajeDTO("La porra no se ha podido borrar.", false);
 		}

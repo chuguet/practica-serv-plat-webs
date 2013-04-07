@@ -30,6 +30,7 @@ import com.upsam.apuestas.model.bean.Porra;
 import com.upsam.apuestas.model.bean.PorraRellenada;
 import com.upsam.apuestas.model.bean.Usuario;
 import com.upsam.apuestas.model.exception.AppException;
+import com.upsam.apuestas.model.service.IPartidoRellenadoService;
 import com.upsam.apuestas.model.service.IPorraRellenadaService;
 import com.upsam.apuestas.model.service.IPorraService;
 
@@ -52,6 +53,9 @@ public class PorraRellenadaController {
 	/** The porra service. */
 	@Inject
 	private IPorraService porraService;
+
+	@Inject
+	private IPartidoRellenadoService partidoRellenadoService;
 
 	/** The porra rellenada util dto. */
 	@Inject
@@ -79,7 +83,7 @@ public class PorraRellenadaController {
 			Usuario user = (Usuario) auth.getPrincipal();
 			PorraRellenada porraRellenada = recuperarPorraRellenadaPorCompeticionYUsuario(
 					porra.getCompeticion(), user.getUser());
-			if(porraRellenada == null){
+			if (porraRellenada == null) {
 				porraRellenada = convertirPorraAPorraRellenada(porra);
 			}
 			porraRellenadaDTO = porraRellenadaUtilDTO.toRest(porraRellenada);
@@ -94,7 +98,7 @@ public class PorraRellenadaController {
 		result.setPorra(porra);
 		PartidoRellenado partidoRellenado;
 		List<PartidoRellenado> partidosRellenados = new ArrayList<PartidoRellenado>();
-		for(Partido partido : porra.getPartidos()){
+		for (Partido partido : porra.getPartidos()) {
 			partidoRellenado = new PartidoRellenado();
 			partidoRellenado.setLocal(partido.getLocal());
 			partidoRellenado.setOrdinal(partido.getOrdinal());
@@ -109,7 +113,7 @@ public class PorraRellenadaController {
 			String competicion, String user) {
 		PorraRellenada result = null;
 		try {
-			
+
 			List<PorraRellenada> porrasRellenadas = porraRellenadaService
 					.findAll();
 			for (PorraRellenada porraRellenada : porrasRellenadas) {
@@ -196,7 +200,8 @@ public class PorraRellenadaController {
 	private List<Porra> filtrarPorrasPorFechaYPublicadas(List<Porra> porras) {
 		List<Porra> result = new ArrayList<Porra>();
 		for (Porra porra : porras) {
-			if (new Date().before(porra.getFechaLimite()) && porra.getPublicada()) {
+			if (new Date().before(porra.getFechaLimite())
+					&& porra.getPublicada()) {
 				result.add(porra);
 			}
 		}
@@ -307,13 +312,19 @@ public class PorraRellenadaController {
 			return new MensajeDTO("Una porra es requerida", false);
 		}
 		try {
-			Authentication auth = SecurityContextHolder.getContext()
-					.getAuthentication();
-			Usuario user = (Usuario) auth.getPrincipal();
-			PorraRellenada porraRellenada = porraRellenadaUtilDTO
+			PorraRellenada porraRellenadaServidor = porraRellenadaService
+					.findOne(porraRellenadaDTO.getId());
+			porraRellenadaServidor.setFechaRelleno(new Date());
+			porraRellenadaService.update(porraRellenadaServidor);
+			PorraRellenada porraRellenadaCliente = porraRellenadaUtilDTO
 					.toBusiness(porraRellenadaDTO);
-			porraRellenada.setUsuario(user);
-			porraRellenadaService.update(porraRellenada);
+			for (PartidoRellenado partidoRellenado : porraRellenadaCliente
+					.getPartidosRellenados()) {
+				PartidoRellenado partidoUpdate = partidoRellenadoService
+						.findOne(partidoRellenado.getId());
+				partidoUpdate.setResultado(partidoRellenado.getResultado());
+				partidoRellenadoService.update(partidoUpdate);
+			}
 			return new MensajeDTO("Porra modificada correctamente", true);
 		} catch (AppException e) {
 			return new MensajeDTO("No se ha podido actualizar la porra", false);

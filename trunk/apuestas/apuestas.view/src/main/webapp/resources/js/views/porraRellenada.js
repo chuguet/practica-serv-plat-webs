@@ -202,18 +202,3 @@ var porraRellenada = {
 		generic.post('porraRellenada/busqueda',data,generic.showInformation);
 	}
 };
-
-function convertirAPartidosRellenados(partidos){
-	var result = new Array();
-	
-	for(var i = 0 ; i<partidos.length ; i++){
-		var data = {
-//				id : partidos[i].id,
-				ordinal : partidos[i].ordinal,
-				resultado :partidos[i].resultado
-		};
-		result.push(data);
-	}
-	
-	return result;
-}

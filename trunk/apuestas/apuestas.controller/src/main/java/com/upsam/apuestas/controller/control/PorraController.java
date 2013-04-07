@@ -32,6 +32,7 @@ import com.upsam.apuestas.model.service.IPorraService;
 @RequestMapping("/porra")
 public class PorraController {
 
+	/** The Constant LOG. */
 	private final static Log LOG = LogFactory.getLog(PorraController.class);
 
 	/** The porra service. */
@@ -43,23 +44,110 @@ public class PorraController {
 	private IPorraUtilDTO porraUtilDTO;
 
 	/**
-	 * Retrieve.
+	 * Creates the form.
 	 * 
-	 * @param id
-	 *            the id
-	 * @return the porra dto
+	 * @param operacion
+	 *            the operacion
+	 * @param uiModel
+	 *            the ui model
+	 * @return the string
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public @ResponseBody
-	PorraDTO retrieve(@PathVariable("id") Integer id) {
-		PorraDTO porraDTO = new PorraDTO();
-		try {
-			Porra porra = porraService.findOne(id);
-			porraDTO = porraUtilDTO.toRest(porra);
-		} catch (AppException e) {
-			LOG.error(e.getMessage());
+	@RequestMapping(value = "/form/{operacion}", method = RequestMethod.GET, produces = "text/html")
+	public String createForm(@PathVariable("operacion") String operacion,
+			final Model uiModel) {
+		uiModel.addAttribute("operacion", operacion);
+		if (!operacion.equals("list") && !operacion.equals("busqueda")) {
+			operacion = "form";
 		}
-		return porraDTO;
+		return new StringBuffer("porra/").append(operacion).toString();
+	}
+
+	/**
+	 * Existe equipo.
+	 * 
+	 * @param partidos
+	 *            the partidos
+	 * @param equipo
+	 *            the equipo
+	 * @return true, if successful
+	 */
+	private boolean existeEquipo(List<Partido> partidos, String equipo) {
+		for (Partido partido : partidos) {
+			if (partido.getLocal().toUpperCase().contains(equipo.toUpperCase())
+					|| partido.getVisitante().toUpperCase()
+							.contains(equipo.toUpperCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Filtrar porras.
+	 * 
+	 * @param porras
+	 *            the porras
+	 * @param busqueda
+	 *            the busqueda
+	 * @return the list
+	 */
+	private List<Porra> filtrarPorras(List<Porra> porras, BusquedaDTO busqueda) {
+		List<Porra> result = new ArrayList<Porra>();
+		for (Porra porra : porras) {
+			if (busqueda.getCompeticion() != null
+					&& !busqueda.getCompeticion().isEmpty()) {
+				if (porra.getCompeticion().toUpperCase()
+						.contains(busqueda.getCompeticion().toUpperCase())
+						&& !result.contains(porra)) {
+					result.add(porra);
+				}
+			}
+			if (busqueda.getEquipo() != null && !busqueda.getEquipo().isEmpty()) {
+				if (existeEquipo(porra.getPartidos(), busqueda.getEquipo())
+						&& !result.contains(porra)) {
+					result.add(porra);
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Insert.
+	 * 
+	 * @param porraDTO
+	 *            the porra dto
+	 * @return the mensaje dto
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public @ResponseBody
+	MensajeDTO insert(@RequestBody PorraDTO porraDTO) {
+		if (porraDTO == null) {
+			return new MensajeDTO("Una porra es requerida", false);
+		}
+		try {
+			Porra porra = porraUtilDTO.toBusiness(porraDTO);
+			porra.setPublicada(Boolean.FALSE);
+			porraService.save(porra);
+			return new MensajeDTO("Porra creada correctamente", true);
+		} catch (AppException e) {
+			return new MensajeDTO(new StringBuffer(
+					"Ya existe una porra de la competición ")
+					.append(porraDTO.getCompeticion())
+					.append(" en base de datos.").toString(), false);
+		}
+	}
+
+	/**
+	 * Checks if is empty.
+	 * 
+	 * @param busquedaDTO
+	 *            the busqueda dto
+	 * @return true, if is empty
+	 */
+	private boolean isEmpty(BusquedaDTO busquedaDTO) {
+		return busquedaDTO.getCompeticion().isEmpty()
+				&& busquedaDTO.getEquipo().isEmpty();
 	}
 
 	/**
@@ -121,139 +209,12 @@ public class PorraController {
 	}
 
 	/**
-	 * Checks if is empty.
+	 * Publicar.
 	 * 
-	 * @param busquedaDTO
-	 *            the busqueda dto
-	 * @return true, if is empty
-	 */
-	private boolean isEmpty(BusquedaDTO busquedaDTO) {
-		return busquedaDTO.getCompeticion().isEmpty()
-				&& busquedaDTO.getEquipo().isEmpty();
-	}
-
-	/**
-	 * Filtrar porras.
-	 * 
-	 * @param porras
-	 *            the porras
-	 * @param busqueda
-	 *            the busqueda
-	 * @return the list
-	 */
-	private List<Porra> filtrarPorras(List<Porra> porras, BusquedaDTO busqueda) {
-		List<Porra> result = new ArrayList<Porra>();
-		for (Porra porra : porras) {
-			if (busqueda.getCompeticion() != null
-					&& !busqueda.getCompeticion().isEmpty()) {
-				if (porra.getCompeticion().toUpperCase()
-						.contains(busqueda.getCompeticion().toUpperCase())
-						&& !result.contains(porra)) {
-					result.add(porra);
-				}
-			}
-			if (busqueda.getEquipo() != null && !busqueda.getEquipo().isEmpty()) {
-				if (existeEquipo(porra.getPartidos(), busqueda.getEquipo())
-						&& !result.contains(porra)) {
-					result.add(porra);
-				}
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * Existe equipo.
-	 * 
-	 * @param partidos
-	 *            the partidos
-	 * @param equipo
-	 *            the equipo
-	 * @return true, if successful
-	 */
-	private boolean existeEquipo(List<Partido> partidos, String equipo) {
-		for (Partido partido : partidos) {
-			if (partido.getLocal().toUpperCase().contains(equipo.toUpperCase())
-					|| partido.getVisitante().toUpperCase()
-							.contains(equipo.toUpperCase())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Insert.
-	 * 
-	 * @param porraDTO
-	 *            the porra dto
+	 * @param idPorra
+	 *            the id porra
 	 * @return the mensaje dto
 	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody
-	MensajeDTO insert(@RequestBody PorraDTO porraDTO) {
-		if (porraDTO == null) {
-			return new MensajeDTO("Una porra es requerida", false);
-		}
-		try {
-			Porra porra = porraUtilDTO.toBusiness(porraDTO);
-			porra.setPublicada(Boolean.FALSE);
-			porraService.save(porra);
-			return new MensajeDTO("Porra creada correctamente", true);
-		} catch (AppException e) {
-			return new MensajeDTO(new StringBuffer(
-					"Ya existe una porra de la competición ")
-					.append(porraDTO.getCompeticion())
-					.append(" en base de datos.").toString(), false);
-		}
-	}
-
-	/**
-	 * Creates the form.
-	 * 
-	 * @param operacion
-	 *            the operacion
-	 * @param uiModel
-	 *            the ui model
-	 * @return the string
-	 */
-	@RequestMapping(value = "/form/{operacion}", method = RequestMethod.GET, produces = "text/html")
-	public String createForm(@PathVariable("operacion") String operacion,
-			final Model uiModel) {
-		uiModel.addAttribute("operacion", operacion);
-		if (!operacion.equals("list") && !operacion.equals("busqueda")) {
-			operacion = "form";
-		}
-		return new StringBuffer("porra/").append(operacion).toString();
-	}
-
-	/**
-	 * Update.
-	 * 
-	 * @param porraDTO
-	 *            the porra dto
-	 * @return the mensaje dto
-	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	public @ResponseBody
-	MensajeDTO update(@RequestBody PorraDTO porraDTO) {
-		if (porraDTO == null) {
-			return new MensajeDTO("Una porra es requerida", false);
-		}
-		try {
-			Porra porra = porraUtilDTO.toBusiness(porraDTO);
-			porra.setPublicada(porraService.findOne(porra.getId())
-					.getPublicada());
-			porraService.update(porra);
-			return new MensajeDTO("Porra modificada correctamente", true);
-		} catch (AppException e) {
-			return new MensajeDTO(new StringBuffer(
-					"Ya existe una porra de la competición ")
-					.append(porraDTO.getCompeticion())
-					.append(" en base de datos.").toString(), false);
-		}
-	}
-
 	@RequestMapping(value = "/publicar/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	MensajeDTO publicar(@PathVariable("id") Integer idPorra) {
@@ -289,6 +250,53 @@ public class PorraController {
 			return new MensajeDTO("Porra eliminada correctamente", true);
 		} catch (AppException e) {
 			return new MensajeDTO("La porra no se ha podido borrar.", false);
+		}
+	}
+
+	/**
+	 * Retrieve.
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the porra dto
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public @ResponseBody
+	PorraDTO retrieve(@PathVariable("id") Integer id) {
+		PorraDTO porraDTO = new PorraDTO();
+		try {
+			Porra porra = porraService.findOne(id);
+			porraDTO = porraUtilDTO.toRest(porra);
+		} catch (AppException e) {
+			LOG.error(e.getMessage());
+		}
+		return porraDTO;
+	}
+
+	/**
+	 * Update.
+	 * 
+	 * @param porraDTO
+	 *            the porra dto
+	 * @return the mensaje dto
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	public @ResponseBody
+	MensajeDTO update(@RequestBody PorraDTO porraDTO) {
+		if (porraDTO == null) {
+			return new MensajeDTO("Una porra es requerida", false);
+		}
+		try {
+			Porra porra = porraUtilDTO.toBusiness(porraDTO);
+			porra.setPublicada(porraService.findOne(porra.getId())
+					.getPublicada());
+			porraService.update(porra);
+			return new MensajeDTO("Porra modificada correctamente", true);
+		} catch (AppException e) {
+			return new MensajeDTO(new StringBuffer(
+					"Ya existe una porra de la competición ")
+					.append(porraDTO.getCompeticion())
+					.append(" en base de datos.").toString(), false);
 		}
 	}
 }

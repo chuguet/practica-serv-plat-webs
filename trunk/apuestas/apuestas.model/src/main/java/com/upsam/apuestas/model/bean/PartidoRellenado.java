@@ -19,26 +19,52 @@ import javax.persistence.Table;
 @Table(name = "PARTIDO_RELLENADO")
 public class PartidoRellenado implements IModelTable {
 
-	/** The ordinal. */
-	@Basic
-	@Column(name = "ORDINAL")
-	private Integer ordinal;
-
-	/** The resultado. */
-	@Basic
-	@Column(name = "RESULTADO")
-	private Resultado resultado;
-
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_PARTIDO_RELLENADO")
 	private Integer id;
 
+	/** The local. */
+	@Basic
+	@Column(name = "LOCAL")
+	private String local;
+
+	/** The ordinal. */
+	@Basic
+	@Column(name = "ORDINAL")
+	private Integer ordinal;
+
 	/** The porra rellenada. */
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_PORRA_RELLENADA")
 	private PorraRellenada porraRellenada;
+
+	/** The resultado. */
+	@Basic
+	@Column(name = "RESULTADO")
+	private Resultado resultado;
+
+	/** The visitante. */
+	@Basic
+	@Column(name = "VISITANTE")
+	private String visitante;
+	/**
+	 * Gets the id.
+	 * 
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+	/**
+	 * Gets the local.
+	 *
+	 * @return the local
+	 */
+	public String getLocal() {
+		return local;
+	}
 
 	/**
 	 * Gets the ordinal.
@@ -50,13 +76,12 @@ public class PartidoRellenado implements IModelTable {
 	}
 
 	/**
-	 * Sets the ordinal.
+	 * Gets the porra rellenada.
 	 * 
-	 * @param ordinal
-	 *            the new ordinal
+	 * @return the porra rellenada
 	 */
-	public void setOrdinal(Integer ordinal) {
-		this.ordinal = ordinal;
+	public PorraRellenada getPorraRellenada() {
+		return porraRellenada;
 	}
 
 	/**
@@ -69,22 +94,12 @@ public class PartidoRellenado implements IModelTable {
 	}
 
 	/**
-	 * Sets the resultado.
-	 * 
-	 * @param resultado
-	 *            the new resultado
+	 * Gets the visitante.
+	 *
+	 * @return the visitante
 	 */
-	public void setResultado(Resultado resultado) {
-		this.resultado = resultado;
-	}
-
-	/**
-	 * Gets the id.
-	 * 
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
+	public String getVisitante() {
+		return visitante;
 	}
 
 	/**
@@ -98,12 +113,22 @@ public class PartidoRellenado implements IModelTable {
 	}
 
 	/**
-	 * Gets the porra rellenada.
-	 * 
-	 * @return the porra rellenada
+	 * Sets the local.
+	 *
+	 * @param local the new local
 	 */
-	public PorraRellenada getPorraRellenada() {
-		return porraRellenada;
+	public void setLocal(String local) {
+		this.local = local;
+	}
+
+	/**
+	 * Sets the ordinal.
+	 * 
+	 * @param ordinal
+	 *            the new ordinal
+	 */
+	public void setOrdinal(Integer ordinal) {
+		this.ordinal = ordinal;
 	}
 
 	/**
@@ -114,5 +139,24 @@ public class PartidoRellenado implements IModelTable {
 	 */
 	public void setPorraRellenada(PorraRellenada porraRellenada) {
 		this.porraRellenada = porraRellenada;
+	}
+
+	/**
+	 * Sets the resultado.
+	 * 
+	 * @param resultado
+	 *            the new resultado
+	 */
+	public void setResultado(Resultado resultado) {
+		this.resultado = resultado;
+	}
+
+	/**
+	 * Sets the visitante.
+	 *
+	 * @param visitante the new visitante
+	 */
+	public void setVisitante(String visitante) {
+		this.visitante = visitante;
 	}
 }

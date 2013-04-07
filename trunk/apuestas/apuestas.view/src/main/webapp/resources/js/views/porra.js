@@ -198,8 +198,14 @@ var porra = {
 		$("#btnModifyPartido").button("disable");
 		
 		$("#btnDeletePartido").button().click(function() {
-			$('#lista').jqGrid('delRowData', porra.rowID);
-			porra.deseleccionarPartido();
+			if($('#lista').jqGrid('getRowData', porra.rowID).id != null){
+				generic.delete('porra/partido', $('#lista').jqGrid('getRowData', porra.rowID).id, function() {
+					generic.getForm('porra');
+				});
+			}else{
+				$('#lista').jqGrid('delRowData', porra.rowID);
+				porra.deseleccionarPartido();
+			}
 		});
 		$("#btnDeletePartido").button("disable");
 		

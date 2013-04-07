@@ -22,6 +22,7 @@ import com.upsam.apuestas.controller.dto.util.IPorraUtilDTO;
 import com.upsam.apuestas.model.bean.Partido;
 import com.upsam.apuestas.model.bean.Porra;
 import com.upsam.apuestas.model.exception.AppException;
+import com.upsam.apuestas.model.service.IPartidoService;
 import com.upsam.apuestas.model.service.IPorraService;
 
 // TODO: Auto-generated Javadoc
@@ -34,6 +35,10 @@ public class PorraController {
 
 	/** The Constant LOG. */
 	private final static Log LOG = LogFactory.getLog(PorraController.class);
+
+	/** The partido service. */
+	@Inject
+	private IPartidoService partidoService;
 
 	/** The porra service. */
 	@Inject
@@ -250,6 +255,31 @@ public class PorraController {
 			return new MensajeDTO("Porra eliminada correctamente", true);
 		} catch (AppException e) {
 			return new MensajeDTO("La porra no se ha podido borrar.", false);
+		}
+	}
+
+	/**
+	 * Removes the partido.
+	 * 
+	 * @param id
+	 *            the id
+	 * @param uiModel
+	 *            the ui model
+	 * @return the mensaje dto
+	 */
+	@RequestMapping(value = "/partido/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody
+	MensajeDTO removePartido(@PathVariable Integer id, Model uiModel) {
+		if (id == null) {
+			return new MensajeDTO("Una porra es requerida", false);
+		}
+		try {
+			Partido partido = new Partido();
+			partido.setId(id);
+			this.partidoService.delete(partido);
+			return new MensajeDTO("Partido eliminado correctamente", true);
+		} catch (AppException e) {
+			return new MensajeDTO("El partido no se ha podido borrar.", false);
 		}
 	}
 

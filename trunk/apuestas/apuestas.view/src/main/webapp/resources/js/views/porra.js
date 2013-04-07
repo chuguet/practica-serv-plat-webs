@@ -203,7 +203,7 @@ var porra = {
 				porra.deseleccionarPartido();
 			}else{
 				generic.delete('porra/partido', $('#lista').jqGrid('getRowData', porra.rowID).id, function() {
-					generic.getForm('porra');
+					generic.getForm('porra', $("#id").val());
 				});
 			}
 		});

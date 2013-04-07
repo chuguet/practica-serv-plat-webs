@@ -16,6 +16,12 @@
 			$(window).bind('resize', function() {
 				$('#lista').setGridWidth($('.ui-jqgrid').parent().innerWidth() - 30);
 			}).trigger('resize');
+			
+			if(porra.publicada == "Si"){
+				$("#btnAddPartido").hide();
+				$("#btnModifyPartido").hide();
+				$("#btnDeletePartido").hide();
+			}
 		};
 	</c:if>
 </script>

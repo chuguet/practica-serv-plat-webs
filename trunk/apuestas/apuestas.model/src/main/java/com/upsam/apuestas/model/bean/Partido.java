@@ -46,7 +46,8 @@ public class Partido implements IModelTable {
 	private String visitante;
 
 	/** The porra. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "ID_PORRA")
 	private Porra porra;
 

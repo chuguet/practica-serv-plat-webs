@@ -8,17 +8,29 @@ import java.util.List;
  */
 public class PorraDTO extends AbstractDTO {
 
-	/** The fecha limite. */
-	private String fechaLimite;
-
 	/** The competicion. */
 	private String competicion;
+
+	/** The fecha limite. */
+	private String fechaLimite;
 
 	/** The partidos dto. */
 	private List<PartidoDTO> partidosDTO;
 
 	/** The porra rellenada dto. */
 	private List<PorraRellenadaDTO> porraRellenadaDTO;
+
+	/** The publicada. */
+	private String publicada;
+
+	/**
+	 * Gets the competicion.
+	 * 
+	 * @return the competicion
+	 */
+	public String getCompeticion() {
+		return competicion;
+	}
 
 	/**
 	 * Gets the fecha limite.
@@ -30,22 +42,30 @@ public class PorraDTO extends AbstractDTO {
 	}
 
 	/**
-	 * Sets the fecha limite.
+	 * Gets the partidos dto.
 	 * 
-	 * @param fechaLimite
-	 *            the new fecha limite
+	 * @return the partidos dto
 	 */
-	public void setFechaLimite(String fechaLimite) {
-		this.fechaLimite = fechaLimite;
+	public List<PartidoDTO> getPartidosDTO() {
+		return partidosDTO;
 	}
 
 	/**
-	 * Gets the competicion.
+	 * Gets the porra rellenada dto.
 	 * 
-	 * @return the competicion
+	 * @return the porra rellenada dto
 	 */
-	public String getCompeticion() {
-		return competicion;
+	public List<PorraRellenadaDTO> getPorraRellenadaDTO() {
+		return porraRellenadaDTO;
+	}
+
+	/**
+	 * Gets the publicada.
+	 * 
+	 * @return the publicada
+	 */
+	public String getPublicada() {
+		return publicada;
 	}
 
 	/**
@@ -59,12 +79,13 @@ public class PorraDTO extends AbstractDTO {
 	}
 
 	/**
-	 * Gets the partidos dto.
+	 * Sets the fecha limite.
 	 * 
-	 * @return the partidos dto
+	 * @param fechaLimite
+	 *            the new fecha limite
 	 */
-	public List<PartidoDTO> getPartidosDTO() {
-		return partidosDTO;
+	public void setFechaLimite(String fechaLimite) {
+		this.fechaLimite = fechaLimite;
 	}
 
 	/**
@@ -78,15 +99,6 @@ public class PorraDTO extends AbstractDTO {
 	}
 
 	/**
-	 * Gets the porra rellenada dto.
-	 * 
-	 * @return the porra rellenada dto
-	 */
-	public List<PorraRellenadaDTO> getPorraRellenadaDTO() {
-		return porraRellenadaDTO;
-	}
-
-	/**
 	 * Sets the porra rellenada dto.
 	 * 
 	 * @param porraRellenadaDTO
@@ -94,5 +106,15 @@ public class PorraDTO extends AbstractDTO {
 	 */
 	public void setPorraRellenadaDTO(List<PorraRellenadaDTO> porraRellenadaDTO) {
 		this.porraRellenadaDTO = porraRellenadaDTO;
+	}
+
+	/**
+	 * Sets the publicada.
+	 * 
+	 * @param publicada
+	 *            the new publicada
+	 */
+	public void setPublicada(String publicada) {
+		this.publicada = publicada;
 	}
 }

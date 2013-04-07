@@ -50,6 +50,11 @@ public class Porra implements IModelTable {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<PorraRellenada> porraRellenada;
 
+	/** The publicada. */
+	@Basic
+	@Column(name = "PUBLICADA")
+	private Boolean publicada;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -122,6 +127,15 @@ public class Porra implements IModelTable {
 		return porraRellenada;
 	}
 
+	/**
+	 * Gets the publicada.
+	 * 
+	 * @return the publicada
+	 */
+	public Boolean getPublicada() {
+		return publicada;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -186,6 +200,16 @@ public class Porra implements IModelTable {
 	 */
 	public void setPorraRellenada(List<PorraRellenada> porraRellenada) {
 		this.porraRellenada = porraRellenada;
+	}
+
+	/**
+	 * Sets the publicada.
+	 * 
+	 * @param publicada
+	 *            the new publicada
+	 */
+	public void setPublicada(Boolean publicada) {
+		this.publicada = publicada;
 	}
 
 }

@@ -10,24 +10,21 @@
 		<div class="buscador">
 			<p>
 				<label for="competicion">Competici&oacute;n:</label> 
-				<input id="competicion" onkeyup="porra.buscar($('input[id=competicion]').val(),$('input[id=equipo]').val())" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
+				<input id="competicion" onkeyup="porraRellenada.buscar($('input[id=competicion]').val(),$('input[id=equipo]').val())" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
 				<label for="equipo">Equipo:</label>
-				<input id="equipo" onkeyup="porra.buscar($('input[id=competicion]').val(),$('input[id=equipo]').val())" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" /> 
+				<input id="equipo" onkeyup="porraRellenada.buscar($('input[id=competicion]').val(),$('input[id=equipo]').val())" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" /> 
 			</p>
 		</div>
 	</fieldset>
 	<div class="botonera">
-		<input type="button" id="btnAlta" value="Alta" /> 
-		<input type="button" id="btnEditar" value="Ver/Editar" />
-		<input type="button" id="btnPublicar" value="Publicar" />
-		<input type="button" id="btnEliminar" value="Eliminar" />
+		<input type="button" id="btnRellenar" value="Rellenar" /> 
 	</div>
 	<table id="lista"></table>
 	<div id=paginadorLista></div>
 </fieldset>
 
 <script type="text/javascript">
-	porra.formatList();
+	porraRellenada.formatList();
 	function showInformationIntoView(information) {
 		$("#lista").jqGrid("clearGridData", true).trigger("reloadGrid");
 		$("#lista").setGridParam({

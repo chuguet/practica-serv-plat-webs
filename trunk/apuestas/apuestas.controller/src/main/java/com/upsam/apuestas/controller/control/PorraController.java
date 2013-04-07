@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +32,8 @@ import com.upsam.apuestas.model.service.IPorraService;
 @RequestMapping("/porra")
 public class PorraController {
 
+	private final static Log LOG = LogFactory.getLog(PorraController.class);
+
 	/** The porra service. */
 	@Inject
 	private IPorraService porraService;
@@ -53,7 +57,7 @@ public class PorraController {
 			Porra porra = porraService.findOne(id);
 			porraDTO = porraUtilDTO.toRest(porra);
 		} catch (AppException e) {
-
+			LOG.error(e.getMessage());
 		}
 		return porraDTO;
 	}
@@ -77,7 +81,7 @@ public class PorraController {
 				porrasDTO.add(porraDTO);
 			}
 		} catch (AppException e) {
-
+			LOG.error(e.getMessage());
 		}
 		return porrasDTO;
 	}
@@ -111,7 +115,7 @@ public class PorraController {
 				}
 			}
 		} catch (AppException e) {
-
+			LOG.error(e.getMessage());
 		}
 		return result;
 	}
@@ -193,6 +197,7 @@ public class PorraController {
 		}
 		try {
 			Porra porra = porraUtilDTO.toBusiness(porraDTO);
+			porra.setPublicada(Boolean.FALSE);
 			porraService.save(porra);
 			return new MensajeDTO("Porra creada correctamente", true);
 		} catch (AppException e) {
@@ -247,6 +252,19 @@ public class PorraController {
 		}
 	}
 
+	@RequestMapping(value = "/publicar/{id}", method = RequestMethod.GET)
+	public @ResponseBody
+	MensajeDTO publicar(@PathVariable("id") Integer idPorra) {
+		try {
+			Porra porra = porraService.findOne(idPorra);
+			porra.setPublicada(Boolean.TRUE);
+			porraService.update(porra);
+			return new MensajeDTO("Porra publicada correctamente", true);
+		} catch (AppException e) {
+			return new MensajeDTO("La porra no se ha podido publicar.", false);
+		}
+	}
+
 	/**
 	 * Removes the.
 	 * 
@@ -263,10 +281,13 @@ public class PorraController {
 			return new MensajeDTO("Una porra es requerida", false);
 		}
 		try {
-			Porra porra = new Porra();
-			porra.setId(id);
-			this.porraService.delete(porra);
-			return new MensajeDTO("Porra eliminada correctamente", true);
+			Porra porra = this.porraService.findOne(id);
+			if (porra.getPublicada()) {
+				return new MensajeDTO("No se puede borrar una porra publicada", true);
+			} else {
+				this.porraService.delete(porra);
+				return new MensajeDTO("Porra eliminada correctamente", true);
+			}
 		} catch (AppException e) {
 			return new MensajeDTO("La porra no se ha podido borrar.", false);
 		}

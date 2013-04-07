@@ -4,7 +4,7 @@ package com.upsam.apuestas.controller.dto;
 /**
  * The Class PartidoRellenadoDTO.
  */
-public class PartidoRellenadoDTO {
+public class PartidoRellenadoDTO extends AbstractDTO {
 
 	/** The ordinal. */
 	private Integer ordinal;
@@ -12,8 +12,11 @@ public class PartidoRellenadoDTO {
 	/** The resultado. */
 	private String resultado;
 
-	/** The porra rellenada dto. */
-	private PorraRellenadaDTO porraRellenadaDTO;
+	/** The local. */
+	private String local;
+
+	/** The visitante. */
+	private String visitante;
 
 	/**
 	 * Gets the ordinal.
@@ -54,21 +57,40 @@ public class PartidoRellenadoDTO {
 	}
 
 	/**
-	 * Gets the porra rellenada dto.
+	 * Gets the visitante.
 	 * 
-	 * @return the porra rellenada dto
+	 * @return the visitante
 	 */
-	public PorraRellenadaDTO getPorraRellenadaDTO() {
-		return porraRellenadaDTO;
+	public String getVisitante() {
+		return visitante;
 	}
 
 	/**
-	 * Sets the porra rellenada dto.
+	 * Sets the visitante.
 	 * 
-	 * @param porraRellenadaDTO
-	 *            the new porra rellenada dto
+	 * @param visitante
+	 *            the new visitante
 	 */
-	public void setPorraRellenadaDTO(PorraRellenadaDTO porraRellenadaDTO) {
-		this.porraRellenadaDTO = porraRellenadaDTO;
+	public void setVisitante(String visitante) {
+		this.visitante = visitante;
+	}
+
+	/**
+	 * Gets the local.
+	 * 
+	 * @return the local
+	 */
+	public String getLocal() {
+		return local;
+	}
+
+	/**
+	 * Sets the local.
+	 * 
+	 * @param local
+	 *            the new local
+	 */
+	public void setLocal(String local) {
+		this.local = local;
 	}
 }

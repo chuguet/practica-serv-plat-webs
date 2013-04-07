@@ -74,6 +74,11 @@ public class PorraUtilDTO implements IPorraUtilDTO {
 		porraDTO.setCompeticion(porra.getCompeticion());
 		porraDTO.setFechaLimite(FORMATTER_DATE.format(porra.getFechaLimite()));
 		porraDTO.setId(porra.getId());
+		if (porra.getPublicada()) {
+			porraDTO.setPublicada("Si");
+		} else {
+			porraDTO.setPublicada("No");
+		}
 		List<PartidoDTO> partidosDTO = new ArrayList<PartidoDTO>();
 		for (Partido partido : porra.getPartidos()) {
 			partidosDTO.add(partidoUtilDTO.toRest(partido));

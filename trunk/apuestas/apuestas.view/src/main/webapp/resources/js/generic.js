@@ -64,7 +64,7 @@ var generic = {
 			data : data,
 			dataType : 'json',
 			success : function(response) {
-				if ($method == 'GET' || (action.indexOf("busqueda") != -1)) {
+				if (($method == 'GET' || (action.indexOf("busqueda") != -1)) && (action.indexOf("publicar") < 0)) {
 					if (callback) {
 						var param = new Array();
 						param.push(response);

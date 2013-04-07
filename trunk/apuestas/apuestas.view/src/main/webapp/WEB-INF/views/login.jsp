@@ -8,7 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta name="description" content="Pantalla de acceso al sistema" />
 
-<link href="resources/css/jquery-ui.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/generic.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/jquery.alerts.css" rel="stylesheet" type="text/css">
 <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">

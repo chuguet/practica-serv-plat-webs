@@ -26,6 +26,7 @@
 		
 		<script src="resources/js/views/usuario.js" type="text/javascript"></script>
 		<script src="resources/js/views/porra.js" type="text/javascript"></script>
+		<script src="resources/js/views/porraRellenada.js" type="text/javascript"></script>
 		
 	</head>
 	<body id="apuestas" class="web" >
@@ -36,12 +37,12 @@
 		</div>
 		
 		<div id="menu">
-		<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_USER">
-			<!--<a href="javascript:void" onclick="javascript:generic.getList('cliente');" title="Ver clientes" class="itemMenu">Clientes</a>-->
-		</sec:authorize>
 		<sec:authorize ifAnyGranted="ROLE_ADMIN">
 			<a href="javascript:void" onclick="javascript:generic.getList('usuario');" title="Ver usuarios" class="itemMenu">Usuarios</a>
 			<a href="javascript:void" onclick="javascript:generic.getList('porra');" title="Ver porras" class="itemMenu">Porras</a>
+		</sec:authorize>
+		<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_USER">
+			<a href="javascript:void" onclick="javascript:generic.getList('porraRellenada');" title="Ver porras rellenadas" class="itemMenu">Rellenar porra</a>
 		</sec:authorize>
 			<div id="usuario">
 				<span><b>Usuario :</b> ${nombre} ${apellidos}</span> 

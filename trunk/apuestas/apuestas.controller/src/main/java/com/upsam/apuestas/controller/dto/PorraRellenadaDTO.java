@@ -8,17 +8,38 @@ import java.util.List;
  */
 public class PorraRellenadaDTO extends AbstractDTO {
 
+	/** The competicion. */
+	private String competicion;
+
+	/** The fecha limite. */
+	private String fechaLimite;
+
 	/** The fecha relleno. */
 	private String fechaRelleno;
+
+	/** The id porra. */
+	private Integer idPorra;
 
 	/** The partidos rellenados dto. */
 	private List<PartidoRellenadoDTO> partidosRellenadosDTO;
 
-	/** The porra dto. */
-	private PorraDTO porraDTO;
+	/**
+	 * Gets the competicion.
+	 * 
+	 * @return the competicion
+	 */
+	public String getCompeticion() {
+		return competicion;
+	}
 
-	/** The usuario dto. */
-	private UsuarioDTO usuarioDTO;
+	/**
+	 * Gets the fecha limite.
+	 * 
+	 * @return the fecha limite
+	 */
+	public String getFechaLimite() {
+		return fechaLimite;
+	}
 
 	/**
 	 * Gets the fecha relleno.
@@ -27,6 +48,44 @@ public class PorraRellenadaDTO extends AbstractDTO {
 	 */
 	public String getFechaRelleno() {
 		return fechaRelleno;
+	}
+
+	/**
+	 * Gets the id porra.
+	 * 
+	 * @return the id porra
+	 */
+	public Integer getIdPorra() {
+		return idPorra;
+	}
+
+	/**
+	 * Gets the partidos rellenados dto.
+	 * 
+	 * @return the partidos rellenados dto
+	 */
+	public List<PartidoRellenadoDTO> getPartidosRellenadosDTO() {
+		return partidosRellenadosDTO;
+	}
+
+	/**
+	 * Sets the competicion.
+	 * 
+	 * @param competicion
+	 *            the new competicion
+	 */
+	public void setCompeticion(String competicion) {
+		this.competicion = competicion;
+	}
+
+	/**
+	 * Sets the fecha limite.
+	 * 
+	 * @param fechaLimite
+	 *            the new fecha limite
+	 */
+	public void setFechaLimite(String fechaLimite) {
+		this.fechaLimite = fechaLimite;
 	}
 
 	/**
@@ -40,12 +99,13 @@ public class PorraRellenadaDTO extends AbstractDTO {
 	}
 
 	/**
-	 * Gets the partidos rellenados dto.
+	 * Sets the id porra.
 	 * 
-	 * @return the partidos rellenados dto
+	 * @param idPorra
+	 *            the new id porra
 	 */
-	public List<PartidoRellenadoDTO> getPartidosRellenadosDTO() {
-		return partidosRellenadosDTO;
+	public void setIdPorra(Integer idPorra) {
+		this.idPorra = idPorra;
 	}
 
 	/**
@@ -59,41 +119,4 @@ public class PorraRellenadaDTO extends AbstractDTO {
 		this.partidosRellenadosDTO = partidosRellenadosDTO;
 	}
 
-	/**
-	 * Gets the porra dto.
-	 * 
-	 * @return the porra dto
-	 */
-	public PorraDTO getPorraDTO() {
-		return porraDTO;
-	}
-
-	/**
-	 * Sets the porra dto.
-	 * 
-	 * @param porraDTO
-	 *            the new porra dto
-	 */
-	public void setPorraDTO(PorraDTO porraDTO) {
-		this.porraDTO = porraDTO;
-	}
-
-	/**
-	 * Gets the usuario dto.
-	 * 
-	 * @return the usuario dto
-	 */
-	public UsuarioDTO getUsuarioDTO() {
-		return usuarioDTO;
-	}
-
-	/**
-	 * Sets the usuario dto.
-	 * 
-	 * @param usuarioDTO
-	 *            the new usuario dto
-	 */
-	public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
-		this.usuarioDTO = usuarioDTO;
-	}
 }

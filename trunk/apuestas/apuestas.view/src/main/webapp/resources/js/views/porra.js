@@ -6,7 +6,7 @@ var porra = {
 			datatype : 'local',
 			data : [],
 			colNames : [
-					"Id", "Competici&oacute;n", "Fecha L&iacute;mite"
+					"Id", "Competici&oacute;n", "Fecha L&iacute;mite", "Publicada"
 			],
 			colModel : [
 					{
@@ -28,6 +28,13 @@ var porra = {
 						sorttype : 'string',
 						sortable : true,
 						align : 'right'
+					}, {
+						name : 'publicada',
+						index : 'publicada',
+						width : 20,
+						sorttype : 'string',
+						sortable : true,
+						align : 'right'
 					}
 			],
 			rowNum : 20,
@@ -43,6 +50,7 @@ var porra = {
 			onSelectRow : function(rowid, status) {
 				$("#btnEditar").button("enable");
 				$("#btnEliminar").button("enable");
+				$("#btnPublicar").button("enable");
 				porra.rowID = rowid;
 			}
 		});
@@ -60,6 +68,11 @@ var porra = {
 			generic.getForm('porra', $('#lista').jqGrid('getRowData', porra.rowID).id);
 		});
 		$("#btnEditar").button("disable");
+		
+		$("#btnPublicar").button().click(function() {
+			generic.get('porra/publicar', $('#lista').jqGrid('getRowData', porra.rowID).id);
+		});
+		$("#btnPublicar").button("disable");
 
 		$("#btnEliminar").button().click(function() {
 			generic.delete('porra', $('#lista').jqGrid('getRowData', porra.rowID).id, function() {
@@ -247,7 +260,7 @@ var porra = {
 		
 		$("#dialog-form-resultado").dialog({
 			autoOpen : false,
-			height : 200,
+			height : 210,
 			width : 300,
 			modal : true,
 			buttons : {

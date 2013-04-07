@@ -291,7 +291,7 @@ public class PorraRellenadaController {
 					.toBusiness(porraRellenadaDTO);
 			porraRellenada.setUsuario(user);
 			porraRellenadaService.save(porraRellenada);
-			return new MensajeDTO("Porra creada correctamente", true);
+			return new MensajeDTO("Porra rellenada correctamente", true);
 		} catch (AppException e) {
 			return new MensajeDTO("La operaci&oacute;n no se pudo completar",
 					false);
@@ -325,7 +325,7 @@ public class PorraRellenadaController {
 				partidoUpdate.setResultado(partidoRellenado.getResultado());
 				partidoRellenadoService.update(partidoUpdate);
 			}
-			return new MensajeDTO("Porra modificada correctamente", true);
+			return new MensajeDTO("Modificaci&oacute;n de resultados de porra correcta", true);
 		} catch (AppException e) {
 			return new MensajeDTO("No se ha podido actualizar la porra", false);
 		}

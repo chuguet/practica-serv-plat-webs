@@ -198,13 +198,13 @@ var porra = {
 		$("#btnModifyPartido").button("disable");
 		
 		$("#btnDeletePartido").button().click(function() {
-			if($('#lista').jqGrid('getRowData', porra.rowID).id != null){
+			if($('#lista').jqGrid('getRowData', porra.rowID).id == "" || $('#lista').jqGrid('getRowData', porra.rowID).id == null){
+				$('#lista').jqGrid('delRowData', porra.rowID);
+				porra.deseleccionarPartido();
+			}else{
 				generic.delete('porra/partido', $('#lista').jqGrid('getRowData', porra.rowID).id, function() {
 					generic.getForm('porra');
 				});
-			}else{
-				$('#lista').jqGrid('delRowData', porra.rowID);
-				porra.deseleccionarPartido();
 			}
 		});
 		$("#btnDeletePartido").button("disable");

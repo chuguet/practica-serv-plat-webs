@@ -23,7 +23,7 @@
 		<input type="button" id="btnEliminar" value="Eliminar" />
 	</div>
 	<table id="lista"></table>
-	<div id=paginadorLista></div>
+	<div id="paginadorLista"></div>
 </fieldset>
 
 <script type="text/javascript">

@@ -46,53 +46,33 @@ public class PorraRellenadaController {
 	private final static Log LOG = LogFactory
 			.getLog(PorraRellenadaController.class);
 
+	/** The partido rellenado service. */
+	@Inject
+	private IPartidoRellenadoService partidoRellenadoService;
+
 	/** The porra rellenada service. */
 	@Inject
 	private IPorraRellenadaService porraRellenadaService;
 
-	/** The porra service. */
-	@Inject
-	private IPorraService porraService;
-
-	@Inject
-	private IPartidoRellenadoService partidoRellenadoService;
-
 	/** The porra rellenada util dto. */
 	@Inject
 	private IPorraRellenadaUtilDTO porraRellenadaUtilDTO;
+
+	/** The porra service. */
+	@Inject
+	private IPorraService porraService;
 
 	/** The porra util dto. */
 	@Inject
 	private IPorraUtilDTO porraUtilDTO;
 
 	/**
-	 * Retrieve.
+	 * Convertir porra a porra rellenada.
 	 * 
-	 * @param id
-	 *            the id
-	 * @return the porra dto
+	 * @param porra
+	 *            the porra
+	 * @return the porra rellenada
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public @ResponseBody
-	PorraRellenadaDTO retrieve(@PathVariable("id") Integer id) {
-		PorraRellenadaDTO porraRellenadaDTO = new PorraRellenadaDTO();
-		try {
-			Porra porra = porraService.findOne(id);
-			Authentication auth = SecurityContextHolder.getContext()
-					.getAuthentication();
-			Usuario user = (Usuario) auth.getPrincipal();
-			PorraRellenada porraRellenada = recuperarPorraRellenadaPorCompeticionYUsuario(
-					porra.getCompeticion(), user.getUser());
-			if (porraRellenada == null) {
-				porraRellenada = convertirPorraAPorraRellenada(porra);
-			}
-			porraRellenadaDTO = porraRellenadaUtilDTO.toRest(porraRellenada);
-		} catch (AppException e) {
-			LOG.error(e.getMessage());
-		}
-		return porraRellenadaDTO;
-	}
-
 	private PorraRellenada convertirPorraAPorraRellenada(Porra porra) {
 		PorraRellenada result = new PorraRellenada();
 		result.setPorra(porra);
@@ -109,25 +89,127 @@ public class PorraRellenadaController {
 		return result;
 	}
 
-	private PorraRellenada recuperarPorraRellenadaPorCompeticionYUsuario(
-			String competicion, String user) {
-		PorraRellenada result = null;
-		try {
+	/**
+	 * Creates the form.
+	 * 
+	 * @param operacion
+	 *            the operacion
+	 * @param uiModel
+	 *            the ui model
+	 * @return the string
+	 */
+	@RequestMapping(value = "/form/{operacion}", method = RequestMethod.GET, produces = "text/html")
+	public String createForm(@PathVariable("operacion") String operacion,
+			final Model uiModel) {
+		uiModel.addAttribute("operacion", operacion);
+		if (!operacion.equals("list") && !operacion.equals("busqueda")) {
+			operacion = "form";
+		}
+		return new StringBuffer("porraRellenada/").append(operacion).toString();
+	}
 
-			List<PorraRellenada> porrasRellenadas = porraRellenadaService
-					.findAll();
-			for (PorraRellenada porraRellenada : porrasRellenadas) {
-				if (porraRellenada.getPorra().getCompeticion()
-						.equals(competicion)
-						&& porraRellenada.getUsuario().getUser().equals(user)) {
-					result = porraRellenada;
-					break;
+	/**
+	 * Existe equipo.
+	 * 
+	 * @param partidos
+	 *            the partidos
+	 * @param equipo
+	 *            the equipo
+	 * @return true, if successful
+	 */
+	private boolean existeEquipo(List<Partido> partidos, String equipo) {
+		for (Partido partido : partidos) {
+			if (partido.getLocal().toUpperCase().contains(equipo.toUpperCase())
+					|| partido.getVisitante().toUpperCase()
+							.contains(equipo.toUpperCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Filtrar porras.
+	 * 
+	 * @param porras
+	 *            the porras
+	 * @param busqueda
+	 *            the busqueda
+	 * @return the list
+	 */
+	private List<Porra> filtrarPorras(List<Porra> porras, BusquedaDTO busqueda) {
+		List<Porra> result = new ArrayList<Porra>();
+		for (Porra porra : porras) {
+			if (busqueda.getCompeticion() != null
+					&& !busqueda.getCompeticion().isEmpty()) {
+				if (porra.getCompeticion().toUpperCase()
+						.contains(busqueda.getCompeticion().toUpperCase())
+						&& !result.contains(porra)) {
+					result.add(porra);
 				}
 			}
-		} catch (AppException e) {
-			LOG.error(e.getMessage());
+			if (busqueda.getEquipo() != null && !busqueda.getEquipo().isEmpty()) {
+				if (existeEquipo(porra.getPartidos(), busqueda.getEquipo())
+						&& !result.contains(porra)) {
+					result.add(porra);
+				}
+			}
 		}
 		return result;
+	}
+
+	/**
+	 * Filtrar porras por fecha.
+	 * 
+	 * @param porras
+	 *            the porras
+	 * @return the list
+	 */
+	private List<Porra> filtrarPorrasPorFechaYPublicadas(List<Porra> porras) {
+		List<Porra> result = new ArrayList<Porra>();
+		for (Porra porra : porras) {
+			if (new Date().before(porra.getFechaLimite())
+					&& porra.getPublicada()) {
+				result.add(porra);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Insert.
+	 * 
+	 * @param porraRellenadaDTO
+	 *            the porra rellenada dto
+	 * @return the mensaje dto
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public @ResponseBody
+	MensajeDTO insert(@RequestBody PorraRellenadaDTO porraRellenadaDTO) {
+		if (porraRellenadaDTO == null) {
+			return new MensajeDTO("Una porra rellenada es requerida", false);
+		}
+		try {
+			PorraRellenada porraRellenada = porraRellenadaUtilDTO
+					.toBusiness(porraRellenadaDTO);
+			porraRellenadaService.save(porraRellenada);
+			return new MensajeDTO("Porra rellenada correctamente", true);
+		} catch (AppException e) {
+			return new MensajeDTO("La operaci&oacute;n no se pudo completar",
+					false);
+		}
+	}
+
+	/**
+	 * Checks if is empty.
+	 * 
+	 * @param busquedaDTO
+	 *            the busqueda dto
+	 * @return true, if is empty
+	 */
+	private boolean isEmpty(BusquedaDTO busquedaDTO) {
+		return busquedaDTO.getCompeticion().isEmpty()
+				&& busquedaDTO.getEquipo().isEmpty();
 	}
 
 	/**
@@ -191,108 +273,61 @@ public class PorraRellenadaController {
 	}
 
 	/**
-	 * Filtrar porras por fecha.
+	 * Recuperar porra rellenada por competicion y usuario.
 	 * 
-	 * @param porras
-	 *            the porras
-	 * @return the list
+	 * @param competicion
+	 *            the competicion
+	 * @param user
+	 *            the user
+	 * @return the porra rellenada
 	 */
-	private List<Porra> filtrarPorrasPorFechaYPublicadas(List<Porra> porras) {
-		List<Porra> result = new ArrayList<Porra>();
-		for (Porra porra : porras) {
-			if (new Date().before(porra.getFechaLimite())
-					&& porra.getPublicada()) {
-				result.add(porra);
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * Checks if is empty.
-	 * 
-	 * @param busquedaDTO
-	 *            the busqueda dto
-	 * @return true, if is empty
-	 */
-	private boolean isEmpty(BusquedaDTO busquedaDTO) {
-		return busquedaDTO.getCompeticion().isEmpty()
-				&& busquedaDTO.getEquipo().isEmpty();
-	}
-
-	/**
-	 * Filtrar porras.
-	 * 
-	 * @param porras
-	 *            the porras
-	 * @param busqueda
-	 *            the busqueda
-	 * @return the list
-	 */
-	private List<Porra> filtrarPorras(List<Porra> porras, BusquedaDTO busqueda) {
-		List<Porra> result = new ArrayList<Porra>();
-		for (Porra porra : porras) {
-			if (busqueda.getCompeticion() != null
-					&& !busqueda.getCompeticion().isEmpty()) {
-				if (porra.getCompeticion().toUpperCase()
-						.contains(busqueda.getCompeticion().toUpperCase())
-						&& !result.contains(porra)) {
-					result.add(porra);
-				}
-			}
-			if (busqueda.getEquipo() != null && !busqueda.getEquipo().isEmpty()) {
-				if (existeEquipo(porra.getPartidos(), busqueda.getEquipo())
-						&& !result.contains(porra)) {
-					result.add(porra);
-				}
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * Existe equipo.
-	 * 
-	 * @param partidos
-	 *            the partidos
-	 * @param equipo
-	 *            the equipo
-	 * @return true, if successful
-	 */
-	private boolean existeEquipo(List<Partido> partidos, String equipo) {
-		for (Partido partido : partidos) {
-			if (partido.getLocal().toUpperCase().contains(equipo.toUpperCase())
-					|| partido.getVisitante().toUpperCase()
-							.contains(equipo.toUpperCase())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Insert.
-	 * 
-	 * @param porraRellenadaDTO
-	 *            the porra rellenada dto
-	 * @return the mensaje dto
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody
-	MensajeDTO insert(@RequestBody PorraRellenadaDTO porraRellenadaDTO) {
-		if (porraRellenadaDTO == null) {
-			return new MensajeDTO("Una porra rellenada es requerida", false);
-		}
+	private PorraRellenada recuperarPorraRellenadaPorCompeticionYUsuario(
+			String competicion, String user) {
+		PorraRellenada result = null;
 		try {
-			//En hibernate se pasa los objetos con las listas que contienen vacias
-			PorraRellenada porraRellenada = porraRellenadaUtilDTO
-					.toBusiness(porraRellenadaDTO);
-			porraRellenadaService.save(porraRellenada);
-			return new MensajeDTO("Porra rellenada correctamente", true);
+
+			List<PorraRellenada> porrasRellenadas = porraRellenadaService
+					.findAll();
+			for (PorraRellenada porraRellenada : porrasRellenadas) {
+				if (porraRellenada.getPorra().getCompeticion()
+						.equals(competicion)
+						&& porraRellenada.getUsuario().getUser().equals(user)) {
+					result = porraRellenada;
+					break;
+				}
+			}
 		} catch (AppException e) {
-			return new MensajeDTO("La operaci&oacute;n no se pudo completar",
-					false);
+			LOG.error(e.getMessage());
 		}
+		return result;
+	}
+
+	/**
+	 * Retrieve.
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the porra dto
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public @ResponseBody
+	PorraRellenadaDTO retrieve(@PathVariable("id") Integer id) {
+		PorraRellenadaDTO porraRellenadaDTO = new PorraRellenadaDTO();
+		try {
+			Porra porra = porraService.findOne(id);
+			Authentication auth = SecurityContextHolder.getContext()
+					.getAuthentication();
+			Usuario user = (Usuario) auth.getPrincipal();
+			PorraRellenada porraRellenada = recuperarPorraRellenadaPorCompeticionYUsuario(
+					porra.getCompeticion(), user.getUser());
+			if (porraRellenada == null) {
+				porraRellenada = convertirPorraAPorraRellenada(porra);
+			}
+			porraRellenadaDTO = porraRellenadaUtilDTO.toRest(porraRellenada);
+		} catch (AppException e) {
+			LOG.error(e.getMessage());
+		}
+		return porraRellenadaDTO;
 	}
 
 	/**
@@ -305,47 +340,18 @@ public class PorraRellenadaController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	public @ResponseBody
 	MensajeDTO update(@RequestBody PorraRellenadaDTO porraRellenadaDTO) {
-		//TODO REVISAR Y METER EL OBJETO QUITANDO LAS REFERENCIAS
 		if (porraRellenadaDTO == null) {
 			return new MensajeDTO("Una porra es requerida", false);
 		}
 		try {
-			PorraRellenada porraRellenadaServidor = porraRellenadaService
-					.findOne(porraRellenadaDTO.getId());
-			porraRellenadaServidor.setFechaRelleno(new Date());
-			porraRellenadaService.update(porraRellenadaServidor);
-			PorraRellenada porraRellenadaCliente = porraRellenadaUtilDTO
+			PorraRellenada porraRellenada = porraRellenadaUtilDTO
 					.toBusiness(porraRellenadaDTO);
-			for (PartidoRellenado partidoRellenado : porraRellenadaCliente
-					.getPartidosRellenados()) {
-				PartidoRellenado partidoUpdate = partidoRellenadoService
-						.findOne(partidoRellenado.getId());
-				partidoUpdate.setResultado(partidoRellenado.getResultado());
-				partidoRellenadoService.update(partidoUpdate);
-			}
-			return new MensajeDTO("Modificaci&oacute;n de resultados de porra correcta", true);
+			porraRellenadaService.update(porraRellenada);
+			return new MensajeDTO(
+					"Modificaci&oacute;n de resultados de porra correcta", true);
 		} catch (AppException e) {
 			return new MensajeDTO("No se ha podido actualizar la porra", false);
 		}
-	}
-
-	/**
-	 * Creates the form.
-	 * 
-	 * @param operacion
-	 *            the operacion
-	 * @param uiModel
-	 *            the ui model
-	 * @return the string
-	 */
-	@RequestMapping(value = "/form/{operacion}", method = RequestMethod.GET, produces = "text/html")
-	public String createForm(@PathVariable("operacion") String operacion,
-			final Model uiModel) {
-		uiModel.addAttribute("operacion", operacion);
-		if (!operacion.equals("list") && !operacion.equals("busqueda")) {
-			operacion = "form";
-		}
-		return new StringBuffer("porraRellenada/").append(operacion).toString();
 	}
 
 }

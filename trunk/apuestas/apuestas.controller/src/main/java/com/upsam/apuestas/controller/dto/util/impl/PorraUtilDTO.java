@@ -24,11 +24,13 @@ import com.upsam.apuestas.model.exception.AppException;
 @Component
 public class PorraUtilDTO implements IPorraUtilDTO {
 
-	@Inject
-	private IPartidoUtilDTO partidoUtilDTO;
-
+	/** The Constant FORMATTER_DATE. */
 	private static final SimpleDateFormat FORMATTER_DATE = new SimpleDateFormat(
 			"dd/MM/yyyy HH:mm:ss");
+
+	/** The partido util dto. */
+	@Inject
+	private IPartidoUtilDTO partidoUtilDTO;
 
 	/*
 	 * (non-Javadoc)

@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.upsam.apuestas.controller.dto.PartidoRellenadoDTO;
@@ -16,6 +18,7 @@ import com.upsam.apuestas.controller.dto.util.IPorraRellenadaUtilDTO;
 import com.upsam.apuestas.model.bean.PartidoRellenado;
 import com.upsam.apuestas.model.bean.Porra;
 import com.upsam.apuestas.model.bean.PorraRellenada;
+import com.upsam.apuestas.model.bean.Usuario;
 import com.upsam.apuestas.model.exception.AppException;
 import com.upsam.apuestas.model.service.IPorraService;
 
@@ -50,7 +53,14 @@ public class PorraRellenadaUtilDTO implements IPorraRellenadaUtilDTO {
 			throws AppException {
 		PorraRellenada result = new PorraRellenada();
 		Porra porra = porraService.findOne(porraRellenadaDTO.getIdPorra());
+		porra.setPorraRellenada(null);
+		porra.setPartidos(null);
 		result.setPorra(porra);
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		Usuario user = (Usuario) auth.getPrincipal();
+		user.setPorraRellenada(null);
+		result.setUsuario(user);
 		result.setFechaRelleno(new Date());
 		if (porraRellenadaDTO.getId() != null) {
 			result.setId(porraRellenadaDTO.getId());

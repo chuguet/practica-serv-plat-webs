@@ -284,12 +284,9 @@ public class PorraRellenadaController {
 			return new MensajeDTO("Una porra rellenada es requerida", false);
 		}
 		try {
-			Authentication auth = SecurityContextHolder.getContext()
-					.getAuthentication();
-			Usuario user = (Usuario) auth.getPrincipal();
+			//En hibernate se pasa los objetos con las listas que contienen vacias
 			PorraRellenada porraRellenada = porraRellenadaUtilDTO
 					.toBusiness(porraRellenadaDTO);
-			porraRellenada.setUsuario(user);
 			porraRellenadaService.save(porraRellenada);
 			return new MensajeDTO("Porra rellenada correctamente", true);
 		} catch (AppException e) {
@@ -308,6 +305,7 @@ public class PorraRellenadaController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	public @ResponseBody
 	MensajeDTO update(@RequestBody PorraRellenadaDTO porraRellenadaDTO) {
+		//TODO REVISAR Y METER EL OBJETO QUITANDO LAS REFERENCIAS
 		if (porraRellenadaDTO == null) {
 			return new MensajeDTO("Una porra es requerida", false);
 		}

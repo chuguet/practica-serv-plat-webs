@@ -13,6 +13,7 @@
 		<link href="resources/css/generic.css" rel="stylesheet" type="text/css" />
 		<link href="resources/css/jquery.alerts.css" rel="stylesheet" type="text/css">
 		<link href="resources/css/ui.jqgrid.css" rel="stylesheet" type="text/css">
+		<link href="resources/css/anythingslider.css" rel="stylesheet" type="text/css">
 
 		<script src="resources/js/jquery.require.js" type="text/javascript"></script>
 		<script src="resources/js/jquery-1.8.2.min.js" type="text/javascript"></script>
@@ -21,12 +22,14 @@
 		<script src="resources/js/generic.js" type="text/javascript"></script>
 		
 		<script src="resources/js/jquery.alerts.js" type="text/javascript"></script>
+		<script src="resources/js/jquery.anythingslider.js" type="text/javascript"></script>
 		<script src="resources/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 		<script src="resources/js/i18n/grid.locale-es.js" type="text/javascript"></script>
 		
 		<script src="resources/js/views/usuario.js" type="text/javascript"></script>
 		<script src="resources/js/views/porra.js" type="text/javascript"></script>
 		<script src="resources/js/views/porraRellenada.js" type="text/javascript"></script>
+		<script src="resources/js/views/resultado.js" type="text/javascript"></script>
 		
 	</head>
 	<body id="apuestas" class="web" >
@@ -43,6 +46,7 @@
 		</sec:authorize>
 		<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_USER">
 			<a href="javascript:void" onclick="javascript:generic.getList('porraRellenada');" title="Ver porras rellenadas" class="itemMenu">Rellenar porra</a>
+			<a href="javascript:void" onclick="javascript:generic.getList('resultado');" title="Ver resultado de porras" class="itemMenu">Ver resultados</a>
 		</sec:authorize>
 			<div id="usuario">
 				<span><b>Usuario :</b> ${nombre} ${apellidos}</span> 

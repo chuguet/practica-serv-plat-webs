@@ -3,7 +3,6 @@ package com.upsam.apuestas.model.bean;
 import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -60,7 +61,8 @@ public class Usuario implements IModelTable {
 	private String email;
 
 	/** The porra rellenada. */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuario")
+	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<PorraRellenada> porraRellenada;
 

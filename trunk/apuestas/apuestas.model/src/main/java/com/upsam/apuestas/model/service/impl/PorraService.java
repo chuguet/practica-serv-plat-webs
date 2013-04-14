@@ -8,8 +8,14 @@ import javax.inject.Inject;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.upsam.apuestas.model.bean.Partido;
+import com.upsam.apuestas.model.bean.PartidoRellenado;
 import com.upsam.apuestas.model.bean.Porra;
+import com.upsam.apuestas.model.bean.PorraRellenada;
 import com.upsam.apuestas.model.exception.AppException;
+import com.upsam.apuestas.model.repository.IPartidoRellenadoRepository;
+import com.upsam.apuestas.model.repository.IPartidoRepository;
+import com.upsam.apuestas.model.repository.IPorraRellenadaRepository;
 import com.upsam.apuestas.model.repository.IPorraRepository;
 import com.upsam.apuestas.model.service.IPorraService;
 
@@ -23,6 +29,18 @@ class PorraService implements IPorraService {
 	/** The porra repository. */
 	@Inject
 	private IPorraRepository porraRepository;
+
+	/** The partido repository. */
+	@Inject
+	private IPartidoRepository partidoRepository;
+
+	/** The porra rellenada repository. */
+	@Inject
+	private IPorraRellenadaRepository porraRellenadaRepository;
+
+	/** The partido rellenado repository. */
+	@Inject
+	private IPartidoRellenadoRepository partidoRellenadoRepository;
 
 	/*
 	 * (non-Javadoc)
@@ -70,7 +88,25 @@ class PorraService implements IPorraService {
 	@Override
 	public void delete(Porra porra) throws AppException {
 		try {
-			porraRepository.delete(porra);
+			Porra porraABorrar = porraRepository.findOne(porra.getId());
+			if (porraABorrar.getPartidos() != null) {
+				for (Partido partido : porraABorrar.getPartidos()) {
+					partidoRepository.delete(partido);
+				}
+			}
+			if (porraABorrar.getPorraRellenada() != null) {
+				for (PorraRellenada porraRellenada : porraABorrar
+						.getPorraRellenada()) {
+					if (porraRellenada.getPartidosRellenados() != null) {
+						for (PartidoRellenado partidoRellenado : porraRellenada
+								.getPartidosRellenados()) {
+							partidoRellenadoRepository.delete(partidoRellenado);
+						}
+					}
+					porraRellenadaRepository.delete(porraRellenada);
+				}
+			}
+			porraRepository.delete(porraABorrar);
 		} catch (SQLException e) {
 			throw new AppException(e);
 		}

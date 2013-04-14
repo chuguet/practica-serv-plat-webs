@@ -1,7 +1,6 @@
 package com.upsam.apuestas.model.bean;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,8 +48,8 @@ public class Partido implements IModelTable {
 	private String visitante;
 
 	/** The porra. */
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE,
-			CascadeType.PERSIST, CascadeType.REFRESH })
+	@ManyToOne
+	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "ID_PORRA")
 	private Porra porra;
 

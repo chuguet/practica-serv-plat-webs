@@ -9,8 +9,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.upsam.apuestas.model.bean.PartidoRellenado;
+import com.upsam.apuestas.model.bean.PorraRellenada;
 import com.upsam.apuestas.model.bean.Usuario;
 import com.upsam.apuestas.model.exception.AppException;
+import com.upsam.apuestas.model.repository.IPartidoRellenadoRepository;
+import com.upsam.apuestas.model.repository.IPorraRellenadaRepository;
 import com.upsam.apuestas.model.repository.IUsuarioRepository;
 import com.upsam.apuestas.model.service.IUsuarioService;
 
@@ -25,6 +29,14 @@ class UsuarioService implements IUsuarioService {
 	@Inject
 	private IUsuarioRepository usuarioRepository;
 
+	/** The partido rellenado repository. */
+	@Inject
+	private IPartidoRellenadoRepository partidoRellenadoRepository;
+
+	/** The porra rellenada repository. */
+	@Inject
+	private IPorraRellenadaRepository porraRellenadaRepository;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -34,7 +46,20 @@ class UsuarioService implements IUsuarioService {
 	 */
 	public void delete(Usuario usuario) throws AppException {
 		try {
-			usuarioRepository.delete(usuario);
+			Usuario usuarioABorrar = usuarioRepository.findOne(usuario.getId());
+			if (usuarioABorrar.getPorraRellenada() != null) {
+				for (PorraRellenada porraRellenada : usuarioABorrar
+						.getPorraRellenada()) {
+					if (porraRellenada.getPartidosRellenados() != null) {
+						for (PartidoRellenado partidoRellenado : porraRellenada
+								.getPartidosRellenados()) {
+							partidoRellenadoRepository.delete(partidoRellenado);
+						}
+					}
+					porraRellenadaRepository.delete(porraRellenada);
+				}
+			}
+			usuarioRepository.delete(usuarioABorrar);
 		} catch (SQLException e) {
 			throw new AppException(e);
 		}

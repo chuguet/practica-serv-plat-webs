@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -38,17 +39,20 @@ public class PorraRellenada implements IModelTable {
 	private Integer id;
 
 	/** The partidos rellenados. */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "porraRellenada")
+	@OneToMany(mappedBy = "porraRellenada")
+	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<PartidoRellenado> partidosRellenados;
 
 	/** The usuario. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "ID_PORRA")
 	private Porra porra;
 
 	/** The usuario. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "ID_USUARIO")
 	private Usuario usuario;
 

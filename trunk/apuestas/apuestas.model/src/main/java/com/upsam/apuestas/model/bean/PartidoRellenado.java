@@ -1,7 +1,6 @@
 package com.upsam.apuestas.model.bean;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -36,7 +38,8 @@ public class PartidoRellenado implements IModelTable {
 	private Integer ordinal;
 
 	/** The porra rellenada. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
+	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinColumn(name = "ID_PORRA_RELLENADA")
 	private PorraRellenada porraRellenada;
 
@@ -49,6 +52,7 @@ public class PartidoRellenado implements IModelTable {
 	@Basic
 	@Column(name = "VISITANTE")
 	private String visitante;
+
 	/**
 	 * Gets the id.
 	 * 
@@ -57,9 +61,10 @@ public class PartidoRellenado implements IModelTable {
 	public Integer getId() {
 		return id;
 	}
+
 	/**
 	 * Gets the local.
-	 *
+	 * 
 	 * @return the local
 	 */
 	public String getLocal() {
@@ -114,8 +119,9 @@ public class PartidoRellenado implements IModelTable {
 
 	/**
 	 * Sets the local.
-	 *
-	 * @param local the new local
+	 * 
+	 * @param local
+	 *            the new local
 	 */
 	public void setLocal(String local) {
 		this.local = local;
@@ -153,8 +159,9 @@ public class PartidoRellenado implements IModelTable {
 
 	/**
 	 * Sets the visitante.
-	 *
-	 * @param visitante the new visitante
+	 * 
+	 * @param visitante
+	 *            the new visitante
 	 */
 	public void setVisitante(String visitante) {
 		this.visitante = visitante;

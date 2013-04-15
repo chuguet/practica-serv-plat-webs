@@ -15,7 +15,7 @@ var resultado = {
 							+ porra.fechaLimite + "</h5>";
 					vista = vista
 							+ "<h5>Esta porra fue rellenada por &uacute;ltima vez el "
-							+ porra.fechaRelleno + "</h5></br></br>";
+							+ porra.fechaRelleno + "</h5></br>";
 
 					vista = vista
 							+ '<table border-style="ridge" width="100%" border="5" cellpadding="3" cellspacing="1" bordercolor="olive" style="border-collapse:separate;">';

@@ -133,16 +133,17 @@ var porraRellenada = {
 		});
 		
 		$("#btnAsigResul").button().click(function() {
+			porraRellenada.deseleccionarPartido();
 			$('#dialog-form-resultado-pronosticado').dialog('option', 'title', 'Asignar Resultado');
-			$("#dialog-form-resultado-pronosticado").dialog("open");
-			$('input:radio[name=resul]')[0].checked = true;
+			$('#dialog-form-resultado-pronosticado').dialog('open');
+			$('input:radio[name=resul-pronosticado]')[0].checked = true;
 		});
 
 		$("#btnAsigResul").button("disable");
 		
 		$("#tabs-resultado-pronosticado").tabs();
 		
-		$("#dialog-form-resultado-pronosticado").dialog({
+		$('#dialog-form-resultado-pronosticado').dialog({
 			autoOpen : false,
 			height : 210,
 			width : 300,
@@ -150,7 +151,7 @@ var porraRellenada = {
 			buttons : {
 				"Aceptar" : function() {
 					var resultado = {
-						resultado : $("input[name='resul']:checked").val(),
+						resultado : $("input[name='resul-pronosticado']:checked").val(),
 					};
 					
 					if (resultado.resultado != null) {

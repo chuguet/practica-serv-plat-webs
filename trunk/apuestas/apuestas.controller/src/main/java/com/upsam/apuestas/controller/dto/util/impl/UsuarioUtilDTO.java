@@ -2,6 +2,7 @@ package com.upsam.apuestas.controller.dto.util.impl;
 
 import org.springframework.stereotype.Component;
 
+import com.upsam.apuestas.batch.bean.InfoUsuario;
 import com.upsam.apuestas.controller.dto.UsuarioDTO;
 import com.upsam.apuestas.controller.dto.util.IUsuarioUtilDTO;
 import com.upsam.apuestas.model.bean.Rol;
@@ -57,5 +58,19 @@ public class UsuarioUtilDTO implements IUsuarioUtilDTO {
 		usuarioDTO.setPassword(usuario.getPassword());
 		usuarioDTO.setEmail(usuario.getEmail());
 		return usuarioDTO;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.upsam.apuestas.controller.dto.util.IUsuarioUtilDTO#toInfoUsuario(
+	 * com.upsam.apuestas.model.bean.Usuario)
+	 */
+	@Override
+	public InfoUsuario toInfoUsuario(Usuario usuario) throws AppException {
+		InfoUsuario result = new InfoUsuario();
+		result.setEmail(usuario.getEmail());
+		return result;
 	}
 }

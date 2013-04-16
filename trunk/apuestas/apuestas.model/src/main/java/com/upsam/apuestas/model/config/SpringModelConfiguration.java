@@ -20,8 +20,8 @@ import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBea
  * The Class SpringModelConfiguration.
  */
 @Configuration
-@ComponentScan({ "com.upsam.apuestas.model" })
-@PropertySource({ "classpath:/application.properties" })
+@ComponentScan("com.upsam.apuestas.model")
+@PropertySource("classpath:/application.properties")
 public class SpringModelConfiguration {
 
 	// Bean para importar el properties

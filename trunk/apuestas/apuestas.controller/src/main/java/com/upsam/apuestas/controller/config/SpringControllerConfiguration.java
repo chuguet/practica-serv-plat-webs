@@ -11,12 +11,23 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
+import com.upsam.apuestas.batch.config.SpringBatchConfiguration;
 import com.upsam.apuestas.model.config.SpringModelConfiguration;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SpringControllerConfiguration.
+ */
 @Configuration
-@ComponentScan({ "com.upsam.apuestas.controller" })
-@Import(SpringModelConfiguration.class)
+@ComponentScan("com.upsam.apuestas.controller")
+@Import({ SpringModelConfiguration.class, SpringBatchConfiguration.class })
 public class SpringControllerConfiguration {
+
+	/**
+	 * Mapping jackson json view.
+	 * 
+	 * @return the mapping jackson json view
+	 */
 	@Bean
 	public MappingJacksonJsonView mappingJacksonJsonView() {
 		return new MappingJacksonJsonView();

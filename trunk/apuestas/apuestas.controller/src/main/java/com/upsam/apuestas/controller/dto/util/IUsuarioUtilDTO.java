@@ -1,5 +1,6 @@
 package com.upsam.apuestas.controller.dto.util;
 
+import com.upsam.apuestas.batch.bean.InfoUsuario;
 import com.upsam.apuestas.controller.dto.UsuarioDTO;
 import com.upsam.apuestas.model.bean.Usuario;
 import com.upsam.apuestas.model.exception.AppException;
@@ -32,4 +33,14 @@ public interface IUsuarioUtilDTO {
 	 */
 	UsuarioDTO toRest(Usuario usuario) throws AppException;
 
+	/**
+	 * To info usuario.
+	 * 
+	 * @param usuario
+	 *            the usuario
+	 * @return the info usuario
+	 * @throws AppException
+	 *             the app exception
+	 */
+	InfoUsuario toInfoUsuario(Usuario usuario) throws AppException;
 }

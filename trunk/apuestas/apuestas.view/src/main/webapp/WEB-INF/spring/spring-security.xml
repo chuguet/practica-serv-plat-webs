@@ -17,6 +17,7 @@
 		<intercept-url pattern="/porra/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/porraRellenada/**" access="ROLE_ADMIN, ROLE_USER" />
 		<intercept-url pattern="/resultado/**" access="ROLE_ADMIN, ROLE_USER" />
+		<intercept-url pattern="/mail/**" access="ROLE_ANONYMOUS" />
 		<intercept-url pattern="/logout" access="ROLE_USER, ROLE_ADMIN" />
 		<form-login login-page="/login" default-target-url="/home" authentication-failure-url="/loginfailed" login-processing-url="/j_spring_security_check" />
 		<logout logout-success-url="/login" />

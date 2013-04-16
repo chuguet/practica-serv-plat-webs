@@ -9,6 +9,14 @@
 	<packaging>pom</packaging>
 	<name>${project.groupId}.${project.artifactId}</name>
 
+	<repositories>
+		<repository>
+			<id>repository.jboss.org-public</id>
+			<name>JBoss.org Maven repository</name>
+			<url>https://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+
 	<properties>
 		<javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
 		<javax.servlet.api.version>2.5</javax.servlet.api.version>
@@ -27,12 +35,18 @@
 		<javassist.version>3.12.1.GA</javassist.version>
 		<jdk.version>1.6</jdk.version>
 		<maven.compiler.version>3.0</maven.compiler.version>
+		<ejb.version>3.1</ejb.version>
+		<jms.version>1.1</jms.version>
+		<jackson.version>1.9.2</jackson.version>
 	</properties>
 
 	<modules>
 		<module>apuestas.model</module>
 		<module>apuestas.view</module>
 		<module>apuestas.controller</module>
+		<module>apuestas.queue</module>
+		<module>apuestas.mail</module>
+		<module>apuestas.batch</module>
 	</modules>
 
 	<developers>

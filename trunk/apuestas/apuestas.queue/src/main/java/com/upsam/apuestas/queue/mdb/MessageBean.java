@@ -19,6 +19,12 @@ import com.upsam.porras.mail.IMailUtil;
 @MessageDriven(mappedName = "jms/queue", activationConfig = { @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue") })
 public class MessageBean implements MessageListener {
 
+	/** The Constant TO. */
+	private static final String TO = "to";
+
+	/** The Constant TEXT. */
+	private static final String TEXT = "text";
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -31,10 +37,9 @@ public class MessageBean implements MessageListener {
 			IMailUtil mailUtil = (IMailUtil) ctx
 					.lookup("java:global/apuestas.app/apuestas.mail/MailUtil");
 
-			String to = msg.getStringProperty("to");
-			String subject = msg.getStringProperty("subject");
-			String text = msg.getStringProperty("text");
-			Mail mail = new Mail(to, subject, text);
+			String to = msg.getStringProperty(TO);
+			String text = msg.getStringProperty(TEXT);
+			Mail mail = new Mail(to, text);
 			mailUtil.sendMail(mail);
 		} catch (JMSException e1) {
 			throw new RuntimeException(e1);

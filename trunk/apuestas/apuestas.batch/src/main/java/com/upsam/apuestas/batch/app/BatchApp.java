@@ -31,6 +31,12 @@ import com.upsam.porras.mail.IMailUtil;
 @Component
 public class BatchApp {
 
+	/** The Constant TEXT. */
+	private static final String TEXT = "text";
+
+	/** The Constant TO. */
+	private static final String TO = "to";
+
 	/** The rest client. */
 	@Inject
 	private IRestClient restClient;
@@ -92,9 +98,8 @@ public class BatchApp {
 			QueueSender sender = queueSession.createSender(queue);
 
 			TextMessage msg = queueSession.createTextMessage();
-			msg.setStringProperty("to", mail.getTo());
-			msg.setStringProperty("subject", mail.getSubject());
-			msg.setStringProperty("text", mail.getText());
+			msg.setStringProperty(TO, mail.getTo());
+			msg.setStringProperty(TEXT, mail.getText());
 
 			sender.send(msg);
 		} catch (JMSException e) {

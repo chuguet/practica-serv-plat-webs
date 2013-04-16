@@ -9,9 +9,6 @@ public class Mail {
 	/** The to. */
 	private String to;
 
-	/** The subject. */
-	private String subject;
-
 	/** The text. */
 	private String text;
 
@@ -25,9 +22,8 @@ public class Mail {
 	 * @param text
 	 *            the text
 	 */
-	public Mail(String to, String subject, String text) {
+	public Mail(String to, String text) {
 		this.to = to;
-		this.subject = subject;
 		this.text = text;
 	}
 
@@ -54,25 +50,6 @@ public class Mail {
 	 */
 	public void setTo(String to) {
 		this.to = to;
-	}
-
-	/**
-	 * Gets the subject.
-	 * 
-	 * @return the subject
-	 */
-	public String getSubject() {
-		return subject;
-	}
-
-	/**
-	 * Sets the subject.
-	 * 
-	 * @param subject
-	 *            the new subject
-	 */
-	public void setSubject(String subject) {
-		this.subject = subject;
 	}
 
 	/**

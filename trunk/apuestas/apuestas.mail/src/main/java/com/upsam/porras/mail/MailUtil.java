@@ -22,7 +22,6 @@ public class MailUtil implements IMailUtil {
 	public Mail makeMail(InfoUsuarioMail infoUsuario) {
 		Mail result = new Mail();
 		result.setTo(infoUsuario.getEmail());
-		result.setSubject("Resumen de porras.");
 		result.setText("Prueba de correo.");
 		return result;
 	}
@@ -36,8 +35,7 @@ public class MailUtil implements IMailUtil {
 	@Override
 	public void sendMail(Mail mail) {
 		System.out.println("Si llego aqui soy el amo:");
-		System.out.println("SUBJECT: " + mail.getSubject());
-		System.out.println("TEXT: " + mail.getText());
 		System.out.println("TO: " + mail.getTo());
+		System.out.println("TEXT: " + mail.getText());
 	}
 }

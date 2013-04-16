@@ -78,9 +78,9 @@
 	</form>
 </div>
 
-<div id="dialog-form-resultado" title="Resultado">
-	<form id="frmResultado">
-		<div id="tabs-resultado">
+<div id="dialog-form-resultado-real" title="Resultado">
+	<form id="frmResultadoReal">
+		<div id="tabs-resultado-real">
 			<a>1: </a><input type="radio" name="resul" value="1">Victoria Local<br>
 			<a>X: </a><input type="radio" name="resul" value="X">Empate<br>
 			<a>2: </a><input type="radio" name="resul" value="2">Victoria Visitante

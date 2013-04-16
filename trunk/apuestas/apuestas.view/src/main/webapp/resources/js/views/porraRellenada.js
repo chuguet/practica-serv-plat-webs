@@ -133,16 +133,16 @@ var porraRellenada = {
 		});
 		
 		$("#btnAsigResul").button().click(function() {
-			$('#dialog-form-resultado').dialog('option', 'title', 'Asignar Resultado');
-			$("#dialog-form-resultado").dialog("open");
+			$('#dialog-form-resultado-pronosticado').dialog('option', 'title', 'Asignar Resultado');
+			$("#dialog-form-resultado-pronosticado").dialog("open");
 			$('input:radio[name=resul]')[0].checked = true;
 		});
 
 		$("#btnAsigResul").button("disable");
 		
-		$("#tabs-resultado").tabs();
+		$("#tabs-resultado-pronosticado").tabs();
 		
-		$("#dialog-form-resultado").dialog({
+		$("#dialog-form-resultado-pronosticado").dialog({
 			autoOpen : false,
 			height : 210,
 			width : 300,

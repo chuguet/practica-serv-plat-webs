@@ -58,9 +58,9 @@
 	</fieldset>
 </form>
 
-<div id="dialog-form-resultado" title="Resultado">
-	<form id="frmResultado">
-		<div id="tabs-resultado">
+<div id="dialog-form-resultado-pronosticado" title="Resultado">
+	<form id="frmResultadoPronosticado">
+		<div id="tabs-resultado-pronosticado">
 			<a>1: </a><input type="radio" name="resul" value="1">Victoria Local<br>
 			<a>X: </a><input type="radio" name="resul" value="X">Empate<br>
 			<a>2: </a><input type="radio" name="resul" value="2">Victoria Visitante

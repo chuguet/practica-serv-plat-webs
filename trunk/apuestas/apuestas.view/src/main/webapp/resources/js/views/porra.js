@@ -210,14 +210,14 @@ var porra = {
 		$("#btnDeletePartido").button("disable");
 		
 		$("#btnAsigResul").button().click(function() {
-			$('#dialog-form-resultado').dialog('option', 'title', 'Asignar Resultado');
-			$("#dialog-form-resultado").dialog("open");
+			$('#dialog-form-resultado-real').dialog('option', 'title', 'Asignar Resultado');
+			$("#dialog-form-resultado-real").dialog("open");
 			$('input:radio[name=resul]')[0].checked = true;
 		});
 		$("#btnAsigResul").button("disable");
 		
 		$("#tabs-partido").tabs();
-		$("#tabs-resultado").tabs();
+		$("#tabs-resultado-real").tabs();
 		
 		$("#dialog-form-partido").dialog({
 			autoOpen : false,
@@ -266,7 +266,7 @@ var porra = {
 			}
 		});
 		
-		$("#dialog-form-resultado").dialog({
+		$("#dialog-form-resultado-real").dialog({
 			autoOpen : false,
 			height : 210,
 			width : 300,

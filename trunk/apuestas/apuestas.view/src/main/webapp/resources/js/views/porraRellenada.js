@@ -133,7 +133,6 @@ var porraRellenada = {
 		});
 		
 		$("#btnAsigResul").button().click(function() {
-			porraRellenada.deseleccionarPartido();
 			$('#dialog-form-resultado-pronosticado').dialog('option', 'title', 'Asignar Resultado');
 			$('#dialog-form-resultado-pronosticado').dialog('open');
 			$('input:radio[name=resul-pronosticado]')[0].checked = true;

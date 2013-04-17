@@ -37,6 +37,7 @@
 		<maven.compiler.version>3.0</maven.compiler.version>
 		<ejb.version>3.1</ejb.version>
 		<jms.version>1.1</jms.version>
+		<mail.version>1.4.7</mail.version>
 		<jackson.version>1.9.2</jackson.version>
 	</properties>
 

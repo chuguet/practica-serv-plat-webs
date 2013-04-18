@@ -141,19 +141,12 @@ public class PorraRellenadaController {
 	private List<Porra> filtrarPorras(List<Porra> porras, BusquedaDTO busqueda) {
 		List<Porra> result = new ArrayList<Porra>();
 		for (Porra porra : porras) {
-			if (busqueda.getCompeticion() != null
-					&& !busqueda.getCompeticion().isEmpty()) {
-				if (porra.getCompeticion().toUpperCase()
-						.contains(busqueda.getCompeticion().toUpperCase())
-						&& !result.contains(porra)) {
-					result.add(porra);
-				}
-			}
-			if (busqueda.getEquipo() != null && !busqueda.getEquipo().isEmpty()) {
-				if (existeEquipo(porra.getPartidos(), busqueda.getEquipo())
-						&& !result.contains(porra)) {
-					result.add(porra);
-				}
+			if (porra.getCompeticion().toUpperCase()
+					.contains(busqueda.getCompeticion().toUpperCase())
+					&& !result.contains(porra)
+					&& busqueda.getEquipo() != null
+					&& existeEquipo(porra.getPartidos(), busqueda.getEquipo())) {
+				result.add(porra);
 			}
 		}
 		return result;

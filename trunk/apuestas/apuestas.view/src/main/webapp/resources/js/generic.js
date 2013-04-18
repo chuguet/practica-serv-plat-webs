@@ -1,5 +1,4 @@
 var generic = {
-	"uri" : "http://localhost:8080/",
 	"getList" : function(entity, parameters) {
 		var action = entity + '/form/list';
 		this.executeHtml('GET', action, function() {
@@ -64,7 +63,7 @@ var generic = {
 			data : data,
 			dataType : 'json',
 			success : function(response) {
-				if (($method == 'GET' || (action.indexOf("busqueda") != -1)) && (action.indexOf("publicar") < 0)) {
+				if ($method == 'GET') {
 					if (callback) {
 						var param = new Array();
 						param.push(response);

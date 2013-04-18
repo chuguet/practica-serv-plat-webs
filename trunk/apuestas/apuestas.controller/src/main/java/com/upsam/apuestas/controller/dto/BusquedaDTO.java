@@ -13,12 +13,40 @@ public class BusquedaDTO {
 	private String equipo;
 
 	/**
+	 * Instantiates a new busqueda dto.
+	 */
+	public BusquedaDTO() {
+	}
+
+	/**
+	 * Instantiates a new busqueda dto.
+	 * 
+	 * @param competicion
+	 *            the competicion
+	 * @param equipo
+	 *            the equipo
+	 */
+	public BusquedaDTO(String competicion, String equipo) {
+		this.competicion = competicion;
+		this.equipo = equipo;
+	}
+
+	/**
 	 * Gets the competicion.
 	 * 
 	 * @return the competicion
 	 */
 	public String getCompeticion() {
 		return competicion;
+	}
+
+	/**
+	 * Gets the equipo.
+	 * 
+	 * @return the equipo
+	 */
+	public String getEquipo() {
+		return equipo;
 	}
 
 	/**
@@ -29,15 +57,6 @@ public class BusquedaDTO {
 	 */
 	public void setCompeticion(String competicion) {
 		this.competicion = competicion;
-	}
-
-	/**
-	 * Gets the equipo.
-	 * 
-	 * @return the equipo
-	 */
-	public String getEquipo() {
-		return equipo;
 	}
 
 	/**

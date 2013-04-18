@@ -199,6 +199,6 @@ var porraRellenada = {
 			competicion : competicion,
 			equipo : equipo
 		};
-		generic.post('porraRellenada/busqueda',data,generic.showInformation);
+		generic.get('porraRellenada/busqueda',data,generic.showInformation);
 	}
 };

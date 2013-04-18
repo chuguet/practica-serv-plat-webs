@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.upsam.apuestas.controller.dto.BusquedaDTO;
@@ -61,7 +62,7 @@ public class PorraController {
 	public String createForm(@PathVariable("operacion") String operacion,
 			final Model uiModel) {
 		uiModel.addAttribute("operacion", operacion);
-		if (!operacion.equals("list") && !operacion.equals("busqueda")) {
+		if (!operacion.equals("list")) {
 			operacion = "form";
 		}
 		return new StringBuffer("porra/").append(operacion).toString();
@@ -182,14 +183,19 @@ public class PorraController {
 	/**
 	 * List all filter.
 	 * 
-	 * @param busquedaDTO
-	 *            the busqueda dto
+	 * @param competicion
+	 *            the competicion
+	 * @param equipo
+	 *            the equipo
 	 * @return the list
 	 */
-	@RequestMapping(value = "/busqueda", method = RequestMethod.POST)
+	@RequestMapping(value = "/busqueda", method = RequestMethod.GET)
 	public @ResponseBody
-	List<PorraDTO> listAllFilter(@RequestBody BusquedaDTO busquedaDTO) {
+	List<PorraDTO> listAllFilter(
+			@RequestParam(value = "competicion") String competicion,
+			@RequestParam(value = "equipo") String equipo) {
 		List<PorraDTO> result = new ArrayList<PorraDTO>();
+		BusquedaDTO busquedaDTO = new BusquedaDTO(competicion, equipo);
 
 		try {
 			List<Porra> porras = porraService.findAll();
@@ -220,9 +226,9 @@ public class PorraController {
 	 *            the id porra
 	 * @return the mensaje dto
 	 */
-	@RequestMapping(value = "/publicar/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/publicar", method = RequestMethod.POST)
 	public @ResponseBody
-	MensajeDTO publicar(@PathVariable("id") Integer idPorra) {
+	MensajeDTO publicar(@RequestBody Integer idPorra) {
 		try {
 			Porra porra = porraService.findOne(idPorra);
 			porra.setPublicada(Boolean.TRUE);

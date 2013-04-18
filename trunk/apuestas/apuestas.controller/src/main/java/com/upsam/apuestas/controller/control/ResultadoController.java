@@ -234,7 +234,7 @@ public class ResultadoController {
 	public String createForm(@PathVariable("operacion") String operacion,
 			final Model uiModel) {
 		uiModel.addAttribute("operacion", operacion);
-		if (!operacion.equals("list") && !operacion.equals("busqueda")) {
+		if (!operacion.equals("list")) {
 			operacion = "form";
 		}
 		return new StringBuffer("resultado/").append(operacion).toString();

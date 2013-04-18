@@ -70,7 +70,7 @@ var porra = {
 		$("#btnEditar").button("disable");
 		
 		$("#btnPublicar").button().click(function() {
-			generic.get('porra/publicar', $('#lista').jqGrid('getRowData', porra.rowID).id, function() {
+			generic.post('porra/publicar', $('#lista').jqGrid('getRowData', porra.rowID).id, function() {
 				generic.getList('porra');
 			});
 		});
@@ -333,6 +333,6 @@ var porra = {
 			competicion : competicion,
 			equipo : equipo
 		};
-		generic.post('porra/busqueda',data,generic.showInformation);
+		generic.get('porra/busqueda',data,generic.showInformation);
 	}
 };

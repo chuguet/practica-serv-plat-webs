@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>apuestas</artifactId>
+	<groupId>com.upsam</groupId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>${project.groupId}.${project.artifactId}</name>
+
+	<repositories>
+		<repository>
+			<id>repository.jboss.org-public</id>
+			<name>JBoss.org Maven repository</name>
+			<url>https://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.version}</version>
+					<configuration>
+						<source>${jdk.version}</source>
+						<target>${jdk.version}</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<properties>
+		<javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
+		<javax.servlet.api.version>2.5</javax.servlet.api.version>
+		<slf4j.version>1.5.8</slf4j.version>
+		<mysql.driver.version>5.1.20</mysql.driver.version>
+		<hibernate.annotations.version>3.5.6-Final</hibernate.annotations.version>
+		<hibernate.commons.annotations.version>3.2.0.Final</hibernate.commons.annotations.version>
+		<junit.version>4.10</junit.version>
+		<spring.version>3.1.3.RELEASE</spring.version>
+		<javax.inject.version>1</javax.inject.version>
+		<cglib.version>2.2.2</cglib.version>
+		<dom4j.version>1.6.1</dom4j.version>
+		<commons.logging.version>1.1.1</commons.logging.version>
+		<commons.collections.version>3.2.1</commons.collections.version>
+		<antlr.version>2.7.7</antlr.version>
+		<javassist.version>3.12.1.GA</javassist.version>
+		<jdk.version>1.6</jdk.version>
+		<maven.compiler.version>3.0</maven.compiler.version>
+		<ejb.version>3.1</ejb.version>
+		<jms.version>1.1</jms.version>
+		<mail.version>1.4.7</mail.version>
+		<jackson.version>1.9.2</jackson.version>
+	</properties>
+
+	<modules>
+		<module>apuestas.model</module>
+		<module>apuestas.view</module>
+		<module>apuestas.controller</module>
+		<module>apuestas.queue</module>
+		<module>apuestas.mail</module>
+		<module>apuestas.batch</module>
+		<module>apuestas.app</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<name>Carlos Huguet</name>
+			<id>huguet</id>
+			<email>huguet10@gmail.com</email>
+			<organization>Huguet S.L.</organization>
+			<roles>
+				<role>Java Architec</role>
+				<role>Java Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+</project>

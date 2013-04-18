@@ -1,0 +1,28 @@
+html {margin:0px; padding:0px;width:100%; height:100%; }
+body {width:100%; height:100%; font-size:0.9em; font-family:arial; background-color:#F2F1F1;margin:0px; padding:0px;}
+body div.ui-datepicker {font-size: 0.7em;}
+
+body.web {overflow:hidden; background-color:#CCFFCC;}
+body.web fieldset.login {border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; width:280px; height:230px; padding: 10px 20px; position:absolute; left:50%; top:50%; margin-top:-100px; margin-left:-140px; background-color:#FFFFFF;}
+body.web fieldset.login span {display:block; width:100%}
+body.web fieldset.login input {width:100%;}
+body.web fieldset.login input.btn {width:138px;margin: 9px 0px 0px 2px;}
+body.web div#header {overflow:hidden; background-image:url(../imgs/degradado_cabecera.png); background-repeat:repeat-x; height: 59px; position:absolute; top:0px; width:100%; color:#FFFFFF; padding-left:20px;}
+body.web div#header h3{margin-top:30px;margin-left:1000px; position:absolute;}
+body.web div#menu {background-color:#FFFFFF; position:absolute; top:60px; height:20px; width:100%; overflow:hidden;}
+body.web div#menu a.itemMenu{text-decoration:none; font-family:arial; font-size:0.9em; color:#213F75; margin:0px 20px; font-weight:bold}
+body.web div#menu a.itemMenu:hover{color:#FFAA15;}
+body.web div#menu div#usuario {position: absolute; top: 0px; right: 10px; font-size: 0.8em; }
+body.web div#menu div#usuario a#btnUnlogin {text-decoration:none; background-image:url(../imgs/logout.png); display:inline-block; width:18px; height:18px; margin-left:15px;}
+body.web div#menu div#usuario a#btnUnlogin span {display:none;}
+body.web div#menu div#usuario a#btnHome {text-decoration:none; background-image:url(../imgs/home.png); display:inline-block; width:18px; height:18px; margin-left:15px;}
+body.web div#menu div#usuario a#btnHome span {display:none;}
+body.web div#footer {background-color:#009900; position:absolute; bottom:0px; width:100%; font-size:0.9em; color:#FFFFFF; text-align:center; padding:3px;}
+body.web div#content {overflow:auto;position:absolute; top:81px; width:100%;}
+body.web div#content img{position:absolute; top: 150px; left:63%;margin-left:-212px;}
+body.web div#content fieldset {border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; margin:20px;}
+body.web div#content form label {width:115px; display:inline-block;}
+body.web div#content form input.text {width:220px; }
+
+body.web form#frmPremios div.redactor_editor {height:250px;}
+body.web form#frmMensaje div.redactor_editor {height:340px;}

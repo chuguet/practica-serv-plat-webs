@@ -18,8 +18,8 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-ear-plugin</artifactId>
+				<version>${plugin.ear.version}</version>
 				<configuration>
-					<version>2.8</version>
 					<modules>
 						<webModule>
 							<groupId>com.upsam</groupId>
@@ -30,12 +30,9 @@
 						<jarModule>
 							<groupId>com.upsam</groupId>
 							<artifactId>apuestas.mail.core</artifactId>
+							<bundleFileName>apuestas.mail.core.jar</bundleFileName>
+							<includeInApplicationXml>true</includeInApplicationXml>
 						</jarModule>
-						<ejbModule>
-							<groupId>com.upsam</groupId>
-							<artifactId>apuestas.queue</artifactId>
-							<bundleFileName>apuestas.queue.jar</bundleFileName>
-						</ejbModule>
 						<ejbModule>
 							<groupId>com.upsam</groupId>
 							<artifactId>apuestas.mail.stateful</artifactId>
@@ -46,10 +43,12 @@
 							<artifactId>apuestas.mail.stateless</artifactId>
 							<bundleFileName>apuestas.mail.stateless.jar</bundleFileName>
 						</ejbModule>
+						<ejbModule>
+							<groupId>com.upsam</groupId>
+							<artifactId>apuestas.queue</artifactId>
+							<bundleFileName>apuestas.queue.jar</bundleFileName>
+						</ejbModule>
 					</modules>
-					<displayName>App Principal</displayName>
-					<!-- If I want maven to generate the application.xml, set this to true -->
-					<generateApplicationXml>true</generateApplicationXml>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -60,26 +59,32 @@
 			<groupId>com.upsam</groupId>
 			<artifactId>apuestas.view</artifactId>
 			<version>${project.version}</version>
+			<type>war</type>
 		</dependency>
 		<dependency>
 			<groupId>com.upsam</groupId>
 			<artifactId>apuestas.queue</artifactId>
 			<version>${project.version}</version>
+			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>com.upsam</groupId>
 			<artifactId>apuestas.mail.stateless</artifactId>
 			<version>${project.version}</version>
+			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>com.upsam</groupId>
 			<artifactId>apuestas.mail.stateful</artifactId>
 			<version>${project.version}</version>
+			<type>ejb</type>
 		</dependency>
 		<dependency>
 			<groupId>com.upsam</groupId>
 			<artifactId>apuestas.mail.core</artifactId>
 			<version>${project.version}</version>
+			<type>jar</type>
 		</dependency>
 	</dependencies>
+
 </project>

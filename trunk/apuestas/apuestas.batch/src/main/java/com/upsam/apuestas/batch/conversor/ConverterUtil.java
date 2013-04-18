@@ -3,7 +3,7 @@ package com.upsam.apuestas.batch.conversor;
 import org.springframework.stereotype.Component;
 
 import com.upsam.apuestas.batch.bean.InfoUsuario;
-import com.upsam.porras.beans.InfoUsuarioMail;
+import com.upsam.apuestas.mail.core.beans.InfoUsuarioMail;
 
 // TODO: Auto-generated Javadoc
 /**

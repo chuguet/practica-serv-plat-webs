@@ -64,6 +64,7 @@
 		<module>apuestas.queue</module>
 		<module>apuestas.mail</module>
 		<module>apuestas.batch</module>
+		<module>apuestas.app</module>
 	</modules>
 
 	<developers>

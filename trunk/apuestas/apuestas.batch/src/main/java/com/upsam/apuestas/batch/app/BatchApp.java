@@ -21,8 +21,9 @@ import com.upsam.apuestas.batch.bean.InfoUsuario;
 import com.upsam.apuestas.batch.bean.InfoUsuarios;
 import com.upsam.apuestas.batch.conversor.IConverterUtil;
 import com.upsam.apuestas.batch.rest.IRestClient;
-import com.upsam.porras.beans.Mail;
-import com.upsam.porras.mail.IMailUtil;
+import com.upsam.apuestas.mail.core.beans.Mail;
+import com.upsam.apuestas.mail.stateful.utils.IMailStatefulUtil;
+import com.upsam.apuestas.mail.stateless.utils.IMailStatelessUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,22 +32,24 @@ import com.upsam.porras.mail.IMailUtil;
 @Component
 public class BatchApp {
 
+	/** The Constant SUBJECT. */
+	private static final String SUBJECT = "subject";
+
 	/** The Constant TEXT. */
 	private static final String TEXT = "text";
 
 	/** The Constant TO. */
 	private static final String TO = "to";
 
-	/** The rest client. */
-	@Inject
-	private IRestClient restClient;
-
 	/** The converter util. */
 	@Inject
 	private IConverterUtil converterUtil;
 
-	/** The mail util. */
-	private IMailUtil mailUtil;
+	/** The mail stateful util. */
+	private IMailStatefulUtil mailStatefulUtil;
+
+	/** The mail stateless util. */
+	private IMailStatelessUtil mailStatelessUtil;
 
 	/** The queue. */
 	@Resource(mappedName = "jms/queue")
@@ -55,6 +58,10 @@ public class BatchApp {
 	/** The queue connection factory. */
 	@Resource(mappedName = "jms/ConnectionFactory")
 	private QueueConnectionFactory queueConnectionFactory;
+
+	/** The rest client. */
+	@Inject
+	private IRestClient restClient;
 
 	/**
 	 * Inits the.
@@ -65,20 +72,25 @@ public class BatchApp {
 	@PostConstruct
 	public void init() throws Exception {
 		Context ctx = new InitialContext();
-		mailUtil = (IMailUtil) ctx
-				.lookup("java:global/apuestas.app/apuestas.mail/MailUtil");
+		mailStatelessUtil = (IMailStatelessUtil) ctx
+				.lookup("java:global/apuestas.app/apuestas.mail.stateless/MailStatelessUtil");
+		mailStatefulUtil = (IMailStatefulUtil) ctx
+				.lookup("java:global/apuestas.app/apuestas.mail.stateful/MailStatefulUtil");
 	}
 
 	/**
 	 * Main batch app.
 	 */
-	@Scheduled(fixedDelay = 60000)
+	@Scheduled(fixedDelay = 90000)
 	public void mainBatchApp() {
 		InfoUsuarios infoUsuarios = restClient.getInfoUsuarios();
 		for (InfoUsuario infoUsuario : infoUsuarios.getUsuarios()) {
-			Mail mail = mailUtil.makeMail(converterUtil
+			Mail mailStateless = mailStatelessUtil.makeMail(converterUtil
 					.infoUsuarioToUsuarioMail(infoUsuario));
-			sendToQueue(mail);
+			Mail mailStateful = mailStatefulUtil.makeMail(converterUtil
+					.infoUsuarioToUsuarioMail(infoUsuario));
+			sendToQueue(mailStateless);
+			sendToQueue(mailStateful);
 		}
 	}
 
@@ -100,6 +112,7 @@ public class BatchApp {
 			TextMessage msg = queueSession.createTextMessage();
 			msg.setStringProperty(TO, mail.getTo());
 			msg.setStringProperty(TEXT, mail.getText());
+			msg.setStringProperty(SUBJECT, mail.getSubject());
 
 			sender.send(msg);
 		} catch (JMSException e) {

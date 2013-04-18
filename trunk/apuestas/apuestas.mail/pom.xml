@@ -10,32 +10,20 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>apuestas.mail</artifactId>
-	<packaging>ejb</packaging>
+	<packaging>pom</packaging>
 	<name>${project.groupId}.${project.artifactId}</name>
 
 	<build>
 		<finalName>${project.groupId}.${project.artifactId}</finalName>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-ejb-plugin</artifactId>
-					<version>2.3</version>
-					<configuration>
-						<ejbVersion>3.1</ejbVersion>
-						<jarName>${project.groupId}.${project.artifactId}</jarName>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
+	<modules>
+		<module>apuestas.mail.stateful</module>
+		<module>apuestas.mail.stateless</module>
+		<module>apuestas.mail.core</module>
+	</modules>
+	
 	<dependencies>
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.ejb</artifactId>
-			<version>${ejb.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>

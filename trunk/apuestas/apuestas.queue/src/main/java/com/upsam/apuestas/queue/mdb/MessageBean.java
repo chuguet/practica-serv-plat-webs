@@ -9,8 +9,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.upsam.porras.beans.Mail;
-import com.upsam.porras.mail.IMailUtil;
+import com.upsam.apuestas.mail.core.beans.Mail;
+import com.upsam.apuestas.mail.stateful.utils.IMailStatefulUtil;
+import com.upsam.apuestas.mail.stateless.utils.IMailStatelessUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,6 +26,9 @@ public class MessageBean implements MessageListener {
 	/** The Constant TEXT. */
 	private static final String TEXT = "text";
 
+	/** The Constant SUBJECT. */
+	private static final String SUBJECT = "subject";
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -34,13 +38,19 @@ public class MessageBean implements MessageListener {
 	public void onMessage(Message msg) {
 		try {
 			Context ctx = new InitialContext();
-			IMailUtil mailUtil = (IMailUtil) ctx
-					.lookup("java:global/apuestas.app/apuestas.mail/MailUtil");
+			IMailStatelessUtil mailStatelessUtil = (IMailStatelessUtil) ctx
+					.lookup("java:global/apuestas.app/apuestas.mail.stateless/MailStatelessUtil");
+			IMailStatefulUtil mailStatefullUtil = (IMailStatefulUtil) ctx
+					.lookup("java:global/apuestas.app/apuestas.mail.stateful/MailStatefulUtil");
 
 			String to = msg.getStringProperty(TO);
 			String text = msg.getStringProperty(TEXT);
-			Mail mail = new Mail(to, text);
-			mailUtil.sendMail(mail);
+			String subject = msg.getStringProperty(SUBJECT);
+			
+			Mail mail = new Mail(to, text, subject);
+			
+			mailStatefullUtil.sendMail(mail);
+			mailStatelessUtil.sendMail(mail);
 		} catch (JMSException e1) {
 			throw new RuntimeException(e1);
 		} catch (NamingException e2) {

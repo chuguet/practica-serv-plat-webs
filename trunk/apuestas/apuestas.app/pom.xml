@@ -49,6 +49,7 @@
 							<bundleFileName>apuestas.queue.jar</bundleFileName>
 						</ejbModule>
 					</modules>
+					<displayName>App Principal</displayName>
 				</configuration>
 			</plugin>
 		</plugins>

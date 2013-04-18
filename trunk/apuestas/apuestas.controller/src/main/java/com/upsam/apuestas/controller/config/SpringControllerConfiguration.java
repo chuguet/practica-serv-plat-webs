@@ -20,7 +20,7 @@ import com.upsam.apuestas.model.config.SpringModelConfiguration;
  */
 @Configuration
 @ComponentScan("com.upsam.apuestas.controller")
-@Import({ SpringModelConfiguration.class/*, SpringBatchConfiguration.class*/ })
+@Import({ SpringModelConfiguration.class, SpringBatchConfiguration.class })
 public class SpringControllerConfiguration {
 
 	/**

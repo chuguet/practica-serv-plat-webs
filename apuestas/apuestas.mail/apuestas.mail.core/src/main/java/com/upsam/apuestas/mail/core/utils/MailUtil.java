@@ -66,7 +66,7 @@ public class MailUtil implements IMailUtil {
 			}
 			text.append("</ul></br></br>");
 		}
-		text.append("<p>Si desea obtener m&aacute;s informaci&oacute;n viste nuestra p&aacute;gina web.</p></br><p>Gracias y un saludo.</p></br></br>");
+		text.append("<p>Si desea obtener m&aacute;s informaci&oacute;n visite nuestra p&aacute;gina web.</p></br><p>Gracias y un saludo.</p></br></br>");
 		text.append("<h6 align='right'>Fecha del sistema: <b>")
 				.append(DATE_FORMATTER.format(date)).append("</b></h6>");
 		result.setText(text.toString());

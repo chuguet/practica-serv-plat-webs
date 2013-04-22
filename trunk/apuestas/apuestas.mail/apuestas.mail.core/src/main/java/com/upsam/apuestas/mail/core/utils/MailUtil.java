@@ -13,6 +13,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.upsam.apuestas.mail.core.beans.EstadisticaCompeticionMail;
 import com.upsam.apuestas.mail.core.beans.InfoUsuarioMail;
 import com.upsam.apuestas.mail.core.beans.Mail;
 
@@ -40,8 +41,35 @@ public class MailUtil implements IMailUtil {
 	public Mail makeMail(InfoUsuarioMail infoUsuario, String subject, Date date) {
 		Mail result = new Mail();
 		result.setTo(infoUsuario.getEmail());
-		result.setText("<p>Hoy es <b>" + DATE_FORMATTER.format(date)
-				+ "</b></p><p>Prueba de <b>correo</b>.</p>");
+		StringBuffer text = new StringBuffer("<h2>Estimado usuari&#64; ")
+				.append(infoUsuario.getNombre())
+				.append(" ")
+				.append(infoUsuario.getApellidos())
+				.append(".</h2>")
+				.append("</br>")
+				.append("<p>Le informamos que en la &uacute;ltima jornada ha tenido un total de <b>")
+				.append(infoUsuario.getPromedioTotal())
+				.append("</b> de promedio aciertos.</p>");
+		if (!infoUsuario.getEstadisticaCompeticionMail().isEmpty()) {
+			text.append("<p>Desglose de apuestas por competici&oacute;n: </p></br><ul>");
+			for (EstadisticaCompeticionMail estadisticaCompeticionMail : infoUsuario
+					.getEstadisticaCompeticionMail()) {
+				text.append("<li>Para la competici&oacute;n <b>")
+						.append(estadisticaCompeticionMail.getCompeticion())
+						.append("</b> tiene un ")
+						.append(estadisticaCompeticionMail.getPromedioParcial())
+						.append(" de promedio de aciertos. Su fecha l&iacute;mite de relleno fue el ")
+						.append(estadisticaCompeticionMail.getFechaLimite())
+						.append(" y la &uacute;ltima vez rellenada por usted fue el ")
+						.append(estadisticaCompeticionMail.getFechaRelleno())
+						.append(".</li>");
+			}
+			text.append("</ul></br></br>");
+		}
+		text.append("<p>Si desea obtener m&aacute;s informaci&oacute;n viste nuestra p&aacute;gina web.</p></br><p>Gracias y un saludo.</p></br></br>");
+		text.append("<h6 align='right'>Fecha del sistema: <b>")
+				.append(DATE_FORMATTER.format(date)).append("</b></h6>");
+		result.setText(text.toString());
 		result.setSubject(subject);
 		return result;
 	}

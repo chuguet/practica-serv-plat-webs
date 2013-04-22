@@ -81,7 +81,7 @@ public class BatchApp {
 	/**
 	 * Main batch app.
 	 */
-	@Scheduled(fixedDelay = 90000)
+	@Scheduled(fixedDelay = 1800000)
 	public void mainBatchApp() {
 		InfoUsuarios infoUsuarios = restClient.getInfoUsuarios();
 		for (InfoUsuario infoUsuario : infoUsuarios.getUsuarios()) {

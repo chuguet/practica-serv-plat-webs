@@ -1,10 +1,13 @@
 package com.upsam.apuestas.controller.dto.util.impl;
 
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Component;
 
 import com.upsam.apuestas.batch.bean.InfoUsuario;
 import com.upsam.apuestas.controller.dto.UsuarioDTO;
 import com.upsam.apuestas.controller.dto.util.IUsuarioUtilDTO;
+import com.upsam.apuestas.controller.util.IEstadisticaUtil;
 import com.upsam.apuestas.model.bean.Rol;
 import com.upsam.apuestas.model.bean.Usuario;
 import com.upsam.apuestas.model.exception.AppException;
@@ -15,6 +18,10 @@ import com.upsam.apuestas.model.exception.AppException;
  */
 @Component
 public class UsuarioUtilDTO implements IUsuarioUtilDTO {
+
+	/** The estadistica util. */
+	@Inject
+	private IEstadisticaUtil estadisticaUtil;
 
 	/*
 	 * (non-Javadoc)
@@ -44,6 +51,26 @@ public class UsuarioUtilDTO implements IUsuarioUtilDTO {
 	 * (non-Javadoc)
 	 * 
 	 * @see
+	 * com.upsam.apuestas.controller.dto.util.IUsuarioUtilDTO#toInfoUsuario(
+	 * com.upsam.apuestas.model.bean.Usuario)
+	 */
+	@Override
+	public InfoUsuario toInfoUsuario(Usuario usuario) throws AppException {
+		InfoUsuario result = new InfoUsuario();
+		result.setEmail(usuario.getEmail());
+		result.setApellidos(usuario.getApellidos());
+		result.setNombre(usuario.getNombre());
+		result.setEstadisticaCompeticion(estadisticaUtil
+				.calcularEstadisticaCompeticion(usuario.getPorraRellenada()));
+		result.setPromedioTotal(estadisticaUtil
+				.calcularEstadisticaTotal(usuario.getPorraRellenada()));
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
 	 * com.upsam.apuestas.controller.dto.util.IUsuarioUtilDTO#toRest(com.upsam
 	 * .apuestas.model.bean.Usuario)
 	 */
@@ -58,19 +85,5 @@ public class UsuarioUtilDTO implements IUsuarioUtilDTO {
 		usuarioDTO.setPassword(usuario.getPassword());
 		usuarioDTO.setEmail(usuario.getEmail());
 		return usuarioDTO;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.upsam.apuestas.controller.dto.util.IUsuarioUtilDTO#toInfoUsuario(
-	 * com.upsam.apuestas.model.bean.Usuario)
-	 */
-	@Override
-	public InfoUsuario toInfoUsuario(Usuario usuario) throws AppException {
-		InfoUsuario result = new InfoUsuario();
-		result.setEmail(usuario.getEmail());
-		return result;
 	}
 }

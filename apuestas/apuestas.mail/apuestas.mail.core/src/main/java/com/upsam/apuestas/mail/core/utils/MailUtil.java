@@ -60,7 +60,7 @@ public class MailUtil implements IMailUtil {
 						.append(estadisticaCompeticionMail.getPromedioParcial())
 						.append(" de promedio de aciertos. Su fecha l&iacute;mite de relleno fue el ")
 						.append(estadisticaCompeticionMail.getFechaLimite())
-						.append(" y la &uacute;ltima vez rellenada por usted fue el ")
+						.append(" y la &uacute;ltima vez que usted la rellen&oacute; fue el ")
 						.append(estadisticaCompeticionMail.getFechaRelleno())
 						.append(".</li>");
 			}

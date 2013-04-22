@@ -20,6 +20,7 @@
 				<artifactId>maven-ear-plugin</artifactId>
 				<version>${plugin.ear.version}</version>
 				<configuration>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<modules>
 						<webModule>
 							<groupId>com.upsam</groupId>
@@ -49,6 +50,7 @@
 							<bundleFileName>apuestas.queue.jar</bundleFileName>
 						</ejbModule>
 					</modules>
+					<generateApplicationXml>false</generateApplicationXml>
 					<displayName>App Principal</displayName>
 				</configuration>
 			</plugin>

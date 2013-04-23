@@ -37,14 +37,4 @@ public class MailStatelessUtil implements IMailStatelessUtil {
 		return mail;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.upsam.porras.mail.IMailUtil#sendMail(com.upsam.porras.beans.Mail)
-	 */
-	@Override
-	public void sendMail(Mail mail) {
-		mailUtil.sendMail(mail);
-	}
 }

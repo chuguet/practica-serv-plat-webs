@@ -36,12 +36,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.upsam</groupId>
-			<artifactId>apuestas.mail.stateless</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.upsam</groupId>
-			<artifactId>apuestas.mail.stateful</artifactId>
+			<artifactId>apuestas.mail.core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

@@ -21,11 +21,4 @@ public interface IMailStatefulUtil {
 	 */
 	Mail makeMail(InfoUsuarioMail infoUsuario);
 
-	/**
-	 * Send mail.
-	 * 
-	 * @param mail
-	 *            the mail
-	 */
-	void sendMail(Mail mail);
 }

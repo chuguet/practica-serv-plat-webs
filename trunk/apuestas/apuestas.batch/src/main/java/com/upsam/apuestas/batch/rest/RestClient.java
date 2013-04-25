@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.upsam.apuestas.batch.bean.DataProperties;
 import com.upsam.apuestas.batch.bean.InfoUsuarios;
 
 // TODO: Auto-generated Javadoc
@@ -15,12 +16,13 @@ import com.upsam.apuestas.batch.bean.InfoUsuarios;
 @Component
 public class RestClient implements IRestClient {
 
-	/** The Constant URL. */
-	private static final String URL = "http://localhost:8080/apuestas.view/mail/info";
-
 	/** The rest template. */
 	@Inject
 	private RestTemplate restTemplate;
+
+	/** The data properties. */
+	@Inject
+	private DataProperties dataProperties;
 
 	/*
 	 * (non-Javadoc)
@@ -31,7 +33,8 @@ public class RestClient implements IRestClient {
 	public InfoUsuarios getInfoUsuarios() {
 		InfoUsuarios result;
 		try {
-			result = restTemplate.getForObject(URL, InfoUsuarios.class);
+			result = restTemplate.getForObject(dataProperties.getUrl(),
+					InfoUsuarios.class);
 		} catch (Exception e) {
 			throw new RestClientException(e.getMessage());
 		}
